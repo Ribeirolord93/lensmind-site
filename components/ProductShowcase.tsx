@@ -1,0 +1,179 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Truck, Shield, RotateCcw, Zap } from 'lucide-react';
+import ProductGallery from './ProductGallery';
+import BuyButton from './BuyButton';
+import type { Product } from '@/types/shopify';
+
+interface ProductShowcaseProps {
+  product: Product;
+}
+
+export default function ProductShowcase({ product }: ProductShowcaseProps) {
+  const variant = product.variants.edges[0]?.node;
+  const images = product.images.edges.map((e) => e.node);
+  const price = variant?.price.amount || product.priceRange.minVariantPrice.amount;
+  const compareAt = variant?.compareAtPrice?.amount;
+
+  // Calcula desconto se houver compareAt
+  const discount = compareAt
+    ? Math.round(
+        ((parseFloat(compareAt) - parseFloat(price)) / parseFloat(compareAt)) * 100
+      )
+    : null;
+
+  return (
+    <section
+      id="producto"
+      className="relative py-24 md:py-32 bg-ink overflow-hidden"
+    >
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Galeria */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:sticky lg:top-24"
+          >
+            <ProductGallery images={images} productTitle={product.title} />
+          </motion.div>
+
+          {/* Detalhes */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-8"
+          >
+            {/* Badge de stock */}
+            {variant?.availableForSale && (
+              <div className="flex items-center gap-2.5 text-xs">
+                <span className="relative flex w-2 h-2">
+                  <span className="animate-pulse-slow absolute inline-flex h-full w-full rounded-full bg-ember opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-ember" />
+                </span>
+                <span className="tracking-[0.2em] uppercase text-ember font-medium">
+                  En stock · Envío 24h
+                </span>
+              </div>
+            )}
+
+            {/* Eyebrow */}
+            <p className="text-[11px] tracking-[0.3em] uppercase text-smoke-500">
+              · {product.vendor || 'Lensmind'} · Edition 01
+            </p>
+
+            {/* Título */}
+            <h2 className="display-heading text-4xl md:text-5xl lg:text-6xl text-balance">
+              {product.title}
+            </h2>
+
+            {/* Preço */}
+            <div className="flex items-baseline gap-4 py-2 border-y border-ink-700">
+              <span className="text-3xl md:text-4xl text-bone font-light">
+                ${parseFloat(price).toFixed(0)}
+              </span>
+              <span className="text-base text-smoke-400">USD</span>
+              {compareAt && (
+                <>
+                  <span className="text-lg text-smoke-500 line-through">
+                    ${parseFloat(compareAt).toFixed(0)}
+                  </span>
+                  {discount && (
+                    <span className="ml-auto text-xs tracking-widest uppercase bg-ember/10 text-ember px-3 py-1.5">
+                      -{discount}%
+                    </span>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Bullet points */}
+            <ul className="space-y-3 text-bone-200">
+              {[
+                'Cámara Sony 1080p HD con anti-shake',
+                'Asistente de IA por voz integrado',
+                'Traductor en tiempo real · 40 idiomas',
+                'Audio direccional + 4 micrófonos',
+              ].map((bullet, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <span className="text-ember mt-1.5 flex-shrink-0">›</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Buy Button */}
+            <div className="pt-2">
+              <BuyButton
+                variantId={variant?.id || ''}
+                available={variant?.availableForSale ?? false}
+              />
+            </div>
+
+            {/* Trust badges */}
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-ink-700">
+              <div className="flex items-center gap-3 text-xs text-smoke-400">
+                <Truck size={16} className="text-ember flex-shrink-0" />
+                <span>Envío gratis · 10-17 días</span>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-smoke-400">
+                <Shield size={16} className="text-ember flex-shrink-0" />
+                <span>Pago 100% seguro</span>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-smoke-400">
+                <RotateCcw size={16} className="text-ember flex-shrink-0" />
+                <span>30 días de garantía</span>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-smoke-400">
+                <Zap size={16} className="text-ember flex-shrink-0" />
+                <span>Despacho en 24h</span>
+              </div>
+            </div>
+
+            {/* Bonus pack */}
+            <div className="glass p-5 rounded-sm">
+              <div className="flex items-start gap-4">
+                <span className="text-2xl">🎁</span>
+                <div>
+                  <p className="text-[11px] tracking-[0.25em] uppercase text-ember mb-1.5 font-medium">
+                    Bono Incluido
+                  </p>
+                  <p className="text-sm text-bone-200 mb-1">
+                    Guía digital "50 Comandos Inteligentes para tu IA Lensmind"
+                  </p>
+                  <p className="text-xs text-smoke-500">
+                    <span className="line-through">Valor $25 USD</span>{' '}
+                    <span className="text-ember">— Gratis hoy</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pagamento */}
+            <div className="pt-6 border-t border-ink-700">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-smoke-500 mb-3">
+                Pagos Seguros
+              </p>
+              <div className="flex flex-wrap gap-3 text-xs text-smoke-400">
+                <span>Visa</span>
+                <span>·</span>
+                <span>Mastercard</span>
+                <span>·</span>
+                <span>Mercado Pago</span>
+                <span>·</span>
+                <span>PayPal</span>
+                <span>·</span>
+                <span>Apple Pay</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
