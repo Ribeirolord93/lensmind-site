@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductShowcase from '@/components/ProductShowcase';
-import StickyMobileCTA from '@/components/StickyMobileCTA';
-import WhatsAppFAB from '@/components/WhatsAppFAB';
 import { getProductByHandle } from '@/lib/shopify';
 
 // ISR: revalida a cada 60s
@@ -57,8 +55,6 @@ export default async function ProductPage({ params }: PageProps) {
         <ProductShowcase product={product} />
       </main>
       <Footer />
-      <StickyMobileCTA />
-      <WhatsAppFAB />
     </>
   );
 }

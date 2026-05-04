@@ -2,158 +2,122 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const links = [
+    { href: '#producto', label: 'Producto' },
+    { href: '#tecnologia', label: 'Tecnología' },
+    { href: '#comparativa', label: 'Comparativa' },
+    { href: '#faq', label: 'FAQ' },
+  ];
+
   return (
     <>
-      {/* Promo bar — escassez sutil */}
-      <div className="bg-ember text-ink text-[11px] tracking-[0.25em] uppercase font-medium">
-        <div className="container mx-auto px-6 py-2.5 flex items-center justify-center gap-2">
-          <span className="hidden sm:inline">⚡</span>
-          <span>Lanzamiento LATAM · Envío gratis · 30 días de garantía</span>
-        </div>
-      </div>
-
       <header
-        className={`sticky top-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'glass-strong border-b border-ink-700/50'
+            ? 'bg-ink/85 backdrop-blur-xl border-b border-ink-700'
             : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto px-6">
-          <nav className="h-16 flex items-center justify-between">
+        <div className="container-padded">
+          <div className="h-16 flex items-center justify-between">
             {/* Logo */}
             <Link
               href="/"
-              className="text-display italic text-2xl tracking-tightest font-light text-bone hover:text-ember transition-colors duration-300"
+              className="text-bone font-semibold tracking-tight text-lg"
             >
-              Lensmind
-              <sup className="text-[10px] not-italic font-sans tracking-normal ml-0.5 text-smoke-400">
-                ™
-              </sup>
+              Lensmind<sup className="text-[10px] tracking-normal ml-0.5">™</sup>
             </Link>
 
-            {/* Nav desktop */}
-            <ul className="hidden md:flex items-center gap-10 text-[13px] tracking-[0.2em] uppercase">
-              <li>
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center gap-8">
+              {links.map((link) => (
                 <Link
-                  href="#producto"
-                  className="text-smoke-400 hover:text-bone transition-colors duration-300"
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] text-smoke-400 hover:text-bone transition-colors font-medium"
                 >
-                  Producto
+                  {link.label}
                 </Link>
-              </li>
-              <li>
-                <Link
-                  href="#tecnologia"
-                  className="text-smoke-400 hover:text-bone transition-colors duration-300"
-                >
-                  Tecnología
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#comparativa"
-                  className="text-smoke-400 hover:text-bone transition-colors duration-300"
-                >
-                  vs Ray-Ban Meta
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#faq"
-                  className="text-smoke-400 hover:text-bone transition-colors duration-300"
-                >
-                  FAQ
-                </Link>
-              </li>
-            </ul>
+              ))}
+            </nav>
 
-            {/* Cart icon */}
+            {/* Right CTA + mobile menu */}
             <div className="flex items-center gap-4">
               <Link
-                href="#producto"
-                className="hidden md:inline-flex btn-ember !py-2.5 !px-6 !text-[11px]"
+                href="#comprar"
+                className="hidden md:inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-bone text-ink text-[13px] font-medium rounded-full hover:bg-bone-300 transition-all duration-300"
               >
                 Comprar
               </Link>
 
               <button
-                aria-label="Menu"
-                className="md:hidden text-bone p-2"
-                onClick={() => setOpen(!open)}
+                onClick={() => setMenuOpen(true)}
+                className="md:hidden text-bone p-2 -mr-2"
+                aria-label="Abrir menu"
               >
-                {open ? <X size={24} /> : <Menu size={24} />}
+                <Menu size={22} />
               </button>
             </div>
-          </nav>
-
-          {/* Mobile menu */}
-          {open && (
-            <div className="md:hidden pb-6 animate-fade-in">
-              <ul className="flex flex-col gap-4 text-sm tracking-wider uppercase pt-4 border-t border-ink-700">
-                <li>
-                  <Link
-                    href="#producto"
-                    onClick={() => setOpen(false)}
-                    className="text-smoke-400 hover:text-bone transition-colors py-2 block"
-                  >
-                    Producto
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#tecnologia"
-                    onClick={() => setOpen(false)}
-                    className="text-smoke-400 hover:text-bone transition-colors py-2 block"
-                  >
-                    Tecnología
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#comparativa"
-                    onClick={() => setOpen(false)}
-                    className="text-smoke-400 hover:text-bone transition-colors py-2 block"
-                  >
-                    vs Ray-Ban Meta
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#faq"
-                    onClick={() => setOpen(false)}
-                    className="text-smoke-400 hover:text-bone transition-colors py-2 block"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li className="pt-2">
-                  <Link
-                    href="#producto"
-                    onClick={() => setOpen(false)}
-                    className="btn-ember w-full"
-                  >
-                    Comprar ahora
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          )}
+          </div>
         </div>
       </header>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-[60] bg-ink animate-fade-in md:hidden">
+          <div className="container-padded">
+            <div className="h-16 flex items-center justify-between">
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="text-bone font-semibold tracking-tight text-lg"
+              >
+                Lensmind<sup className="text-[10px] tracking-normal ml-0.5">™</sup>
+              </Link>
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="text-bone p-2 -mr-2"
+                aria-label="Cerrar menu"
+              >
+                <X size={22} />
+              </button>
+            </div>
+          </div>
+
+          <nav className="px-6 pt-12 flex flex-col gap-8">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-bone text-3xl font-semibold tracking-tight"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="#comprar"
+              onClick={() => setMenuOpen(false)}
+              className="mt-8 inline-flex items-center justify-center gap-2 px-6 py-4 bg-bone text-ink font-medium rounded-full"
+            >
+              Comprar — $199 USD
+            </Link>
+          </nav>
+        </div>
+      )}
     </>
   );
 }

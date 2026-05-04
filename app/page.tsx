@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
-import Marquee from '@/components/Marquee';
 import BenefitsGrid from '@/components/BenefitsGrid';
 import VideoShowcase from '@/components/VideoShowcase';
 import ProductShowcase from '@/components/ProductShowcase';
@@ -11,12 +10,6 @@ import StatsBar from '@/components/StatsBar';
 import FAQ from '@/components/FAQ';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
-
-// Floating conversion components
-import StickyMobileCTA from '@/components/StickyMobileCTA';
-import WhatsAppFAB from '@/components/WhatsAppFAB';
-import ProofToast from '@/components/ProofToast';
-import ExitIntentPopup from '@/components/ExitIntentPopup';
 
 import { getFirstProduct } from '@/lib/shopify';
 import { MOCK_PRODUCT } from '@/lib/mock-product';
@@ -32,46 +25,37 @@ export default async function HomePage() {
     <>
       <Header />
       <main>
-        {/* 1. ATRAIR - Hero impactante com produto visível */}
+        {/* Hero — fullscreen video placeholder + headline */}
         <Hero />
 
-        {/* 2. CONFIAR - Trust bar imediata */}
+        {/* Trust bar — quick stats inline */}
         <TrustBar />
 
-        {/* 3. INFORMAR - Features rotativas */}
-        <Marquee />
-
-        {/* 4. EDUCAR - 4 capacidades-chave */}
+        {/* Tech features — 4 alternating Meta-style blocks */}
         <BenefitsGrid />
 
-        {/* 5. EMOCIONAR - Lifestyle/vídeo cinematográfico */}
+        {/* Lifestyle cinema video */}
         <VideoShowcase />
 
-        {/* 6. DECIDIR - Produto + buy box */}
+        {/* Product showcase + buy box */}
         <ProductShowcase product={product} />
 
-        {/* 7. CONVENCER - Comparativo com Ray-Ban */}
+        {/* Comparativa */}
         <ComparisonTable />
 
-        {/* 8. SOCIAL PROOF - Comunidade + reservas */}
-        <ReviewsSection />
-
-        {/* 9. CONTEXTO - Stats de mercado */}
+        {/* Stats */}
         <StatsBar />
 
-        {/* 10. RESOLVER - FAQ derruba objeções */}
+        {/* Reviews */}
+        <ReviewsSection />
+
+        {/* FAQ */}
         <FAQ />
 
-        {/* 11. CONVERTER - CTA final dramático */}
+        {/* Final CTA */}
         <FinalCTA />
       </main>
       <Footer />
-
-      {/* Floating conversion elements */}
-      <StickyMobileCTA />
-      <WhatsAppFAB />
-      <ProofToast />
-      <ExitIntentPopup />
     </>
   );
 }

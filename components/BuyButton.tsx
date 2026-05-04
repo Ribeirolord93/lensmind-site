@@ -56,7 +56,7 @@ export default function BuyButton({
     return (
       <button
         disabled
-        className={`btn-ghost cursor-not-allowed opacity-60 ${className}`}
+        className={`btn-secondary w-full cursor-not-allowed opacity-50 ${className}`}
       >
         Agotado temporalmente
       </button>
@@ -66,7 +66,7 @@ export default function BuyButton({
   if (demoMode) {
     return (
       <div className="space-y-3 animate-fade-in">
-        <div className="glass-strong p-5 rounded-sm border border-ember/30">
+        <div className="bg-ink-900 p-5 rounded-2xl border border-ember/30">
           <div className="flex items-start gap-3">
             <span className="text-2xl">⏰</span>
             <div className="flex-1">

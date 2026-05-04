@@ -1,30 +1,25 @@
 import type { Metadata } from 'next';
-import { Fraunces, Manrope } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-const fraunces = Fraunces({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-fraunces',
-  display: 'swap',
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700'],
-  variable: '--font-manrope',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://lensmind.lat'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://lensmind.lat'
+  ),
   title: {
-    default: 'Lensmind™ — Gafas Inteligentes con IA | Cámara 1080p · Traductor en Tiempo Real',
+    default:
+      'Lensmind™ — Gafas Inteligentes con IA | Cámara 1080p · Traductor en Tiempo Real',
     template: '%s | Lensmind',
   },
   description:
-    'Gafas con IA, cámara Sony 1080p, traductor en 40 idiomas y audio manos libres. Todo lo del Ray-Ban Meta por $199 USD. Envío gratis a México, Chile y Colombia.',
+    'Gafas con IA, cámara Sony 1080p, traductor en 40 idiomas y audio manos libres. Diseñadas para Latinoamérica. $199 USD.',
   keywords: [
     'gafas inteligentes',
     'gafas con IA',
@@ -42,13 +37,12 @@ export const metadata: Metadata = {
     siteName: 'Lensmind',
     title: 'Lensmind™ — Gafas Inteligentes con IA',
     description:
-      'La nueva generación de gafas inteligentes. Cámara, IA y traductor en tiempo real por $199 USD.',
-    // OG image gerada automaticamente via app/opengraph-image.tsx
+      'Cámara 1080p, IA por voz y traductor en 40 idiomas. $199 USD.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Lensmind™ — Gafas Inteligentes con IA',
-    description: 'La nueva generación de gafas inteligentes por $199 USD.',
+    description: 'Cámara 1080p, IA por voz y traductor en tiempo real.',
   },
   robots: {
     index: true,
@@ -68,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${fraunces.variable} ${manrope.variable}`}>
+    <html lang="es" className={inter.variable}>
       <body className="font-sans bg-ink text-bone antialiased">
         {children}
       </body>

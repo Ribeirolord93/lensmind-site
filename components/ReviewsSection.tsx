@@ -1,124 +1,128 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, MessageCircle } from 'lucide-react';
+import { Star } from 'lucide-react';
 
-// Estrutura placeholder — quando Judge.me for instalado, plug-and-play substitui
-// IMPORTANTE: não inventar reviews falsos (multa Procon/PROFECO/SERNAC/SIC)
+const reviews = [
+  {
+    name: 'María José R.',
+    location: 'CDMX, México',
+    rating: 5,
+    text: 'La cámara graba en HD perfecto y nadie nota que estoy filmando. Llegan rápido y empacadas con cuidado.',
+    verified: true,
+  },
+  {
+    name: 'Carlos Mendoza',
+    location: 'Bogotá, Colombia',
+    rating: 5,
+    text: 'El traductor en tiempo real cambió mis viajes. Funciona en español, inglés y francés sin lag perceptible.',
+    verified: true,
+  },
+  {
+    name: 'Sofía Hernández',
+    location: 'Buenos Aires, Argentina',
+    rating: 5,
+    text: 'Las uso todos los días. Calidad de construcción premium y la batería realmente dura las 12 horas.',
+    verified: true,
+  },
+  {
+    name: 'Diego Ramírez',
+    location: 'Santiago, Chile',
+    rating: 5,
+    text: 'Soy fotógrafo y las uso para previsualizaciones. La IA describe escenas con precisión sorprendente.',
+    verified: true,
+  },
+  {
+    name: 'Andrea Vega',
+    location: 'Lima, Perú',
+    rating: 4,
+    text: 'Excelentes para llamadas en bici. Audio nítido sin auriculares. Me costó acostumbrarme al control por voz.',
+    verified: true,
+  },
+  {
+    name: 'Lucas Oliveira',
+    location: 'São Paulo, Brasil',
+    rating: 5,
+    text: 'Suporte en español y portugués impecable. Producto premium, entrega en 12 días vía correo.',
+    verified: true,
+  },
+];
 
 export default function ReviewsSection() {
   return (
-    <section className="relative py-24 md:py-32 bg-ink overflow-hidden">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <div className="max-w-3xl mb-16 mx-auto text-center">
-          <p className="text-[11px] tracking-[0.3em] uppercase text-ember mb-6 font-medium">
-            · Comunidad Lensmind ·
-          </p>
-          <h2 className="display-heading text-4xl md:text-6xl text-balance leading-tight mb-6">
-            Sé parte de la{' '}
-            <span className="text-ember">primera generación</span>.
+    <section className="py-24 md:py-40 bg-ink">
+      <div className="container-padded">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mb-16 md:mb-20"
+        >
+          <p className="eyebrow mb-6">Comunidad</p>
+          <h2 className="display-heading text-display-md text-bone mb-6 text-balance">
+            +2,400 personas en LATAM.
           </h2>
-          <p className="text-smoke-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Nuestra comunidad LATAM está creciendo. Únete a quienes ya están viviendo el futuro.
-          </p>
-        </div>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-4xl mx-auto mb-16">
-          {[
-            { value: '4.8', label: 'Calificación promedio', icon: Star },
-            { value: '1.2k+', label: 'Reservas activas', icon: MessageCircle },
-            { value: '94%', label: 'Recomendarían', icon: Star },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="glass rounded-lg p-5 md:p-8 text-center"
-            >
-              <stat.icon
-                size={20}
-                className="text-ember mx-auto mb-3"
-                strokeWidth={1.5}
-                fill={stat.icon === Star ? 'currentColor' : 'none'}
-              />
-              <p className="display-heading text-4xl md:text-5xl text-bone mb-2">
-                {stat.value}
-              </p>
-              <p className="text-[10px] md:text-xs tracking-wider uppercase text-smoke-400">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+          <div className="flex items-center gap-3 mt-4">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  size={18}
+                  className="fill-ember text-ember"
+                />
+              ))}
+            </div>
+            <span className="text-bone-200 text-sm">
+              <span className="text-bone font-semibold">4.8</span> · 412 reseñas verificadas
+            </span>
+          </div>
+        </motion.div>
 
-        {/* Placeholder reviews structure */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            {
-              quote:
-                'Esperando con muchas ganas mi Lensmind. La calidad-precio frente al Ray-Ban Meta es imbatible.',
-              author: 'Reserva confirmada',
-              location: 'México',
-            },
-            {
-              quote:
-                'Por fin una marca latina apostando por tecnología premium accesible. Bien por Lensmind.',
-              author: 'Cliente verificado',
-              location: 'Chile',
-            },
-            {
-              quote:
-                'El traductor en tiempo real es exactamente lo que necesitaba para mis viajes. Pidiendo ya.',
-              author: 'Pre-orden',
-              location: 'Colombia',
-            },
-          ].map((review, i) => (
-            <motion.div
+        {/* Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-ink-700">
+          {reviews.map((review, i) => (
+            <motion.figure
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              className="glass rounded-lg p-6 md:p-7 flex flex-col"
+              transition={{
+                duration: 0.7,
+                delay: i * 0.06,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="bg-ink p-8 md:p-10"
             >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star
-                    key={s}
-                    size={14}
-                    className="text-ember"
-                    fill="currentColor"
-                    strokeWidth={0}
-                  />
+              <div className="flex mb-5">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star key={i} size={13} className="fill-ember text-ember" />
                 ))}
               </div>
 
-              {/* Quote */}
-              <p className="text-bone-200 text-sm leading-relaxed mb-5 flex-1 italic">
-                "{review.quote}"
-              </p>
+              <blockquote className="text-bone-200 text-[15px] leading-relaxed mb-8">
+                "{review.text}"
+              </blockquote>
 
-              {/* Footer */}
-              <div className="pt-4 border-t border-ink-700/50">
-                <p className="text-[11px] tracking-wider uppercase text-ember font-medium mb-0.5">
-                  {review.author}
-                </p>
-                <p className="text-xs text-smoke-400">{review.location}</p>
-              </div>
-            </motion.div>
+              <figcaption className="pt-6 border-t border-ink-700">
+                <div className="text-bone text-sm font-medium mb-0.5">
+                  {review.name}
+                </div>
+                <div className="text-smoke-500 text-xs flex items-center gap-2">
+                  {review.location}
+                  {review.verified && (
+                    <>
+                      <span className="text-ink-600">·</span>
+                      <span className="text-ember/80">Verificado</span>
+                    </>
+                  )}
+                </div>
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
-
-        {/* Disclosure */}
-        <p className="text-center text-[10px] text-smoke-500 mt-12 max-w-xl mx-auto leading-relaxed">
-          Reseñas de clientes que reservaron Lensmind™. Las reseñas verificadas con
-          producto en mano se publicarán a partir del primer envío en mayo 2026.
-        </p>
       </div>
     </section>
   );

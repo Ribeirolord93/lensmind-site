@@ -1,66 +1,58 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export default function FinalCTA() {
   return (
-    <section className="relative py-32 md:py-48 bg-ink overflow-hidden">
-      {/* Atmospheric gradient */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-ember/[0.06] rounded-full blur-[160px]" />
+    <section className="py-32 md:py-48 bg-ink relative overflow-hidden border-t border-ink-700">
+      {/* Decorative ember glow */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+        <div className="w-[600px] h-[600px] bg-ember rounded-full blur-[200px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container-padded relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-5xl mx-auto text-center"
         >
-          <p className="text-[11px] tracking-[0.4em] uppercase text-ember mb-8 font-medium">
-            · Última Llamada ·
-          </p>
+          <p className="eyebrow mb-8">Lensmind™ Edition 01</p>
 
-          <h2 className="display-heading text-6xl sm:text-7xl md:text-[9rem] leading-[0.95] mb-10 text-balance">
-            El futuro
+          <h2 className="display-heading text-display-lg text-bone text-balance mb-10">
+            El futuro está
             <br />
-            <span className="text-ember">no espera</span>.
+            en tu mirada.
           </h2>
 
-          <p className="text-smoke-400 text-lg md:text-xl max-w-xl mx-auto mb-12 leading-relaxed text-balance">
-            Únete a la primera generación de Latinoamérica en usar gafas con
-            IA. Stock limitado de lanzamiento.
+          <p className="text-bone-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+            Cámara Sony 1080p · IA por voz · Traductor 40 idiomas.
+            Envío en 24h con tracking activo.
           </p>
 
-          {/* Pricing reveal */}
-          <div className="inline-flex items-baseline gap-4 mb-10 px-6 py-4 border border-ink-700 rounded-sm">
-            <span className="text-smoke-500 text-base line-through">
-              $329 USD
-            </span>
-            <span className="text-bone text-2xl md:text-3xl">
-              $199 <span className="text-smoke-400 text-base">USD</span>
-            </span>
-            <span className="text-ember text-xs tracking-[0.2em] uppercase">
-              Ahorra $130
-            </span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <Link href="#producto" className="btn-ember group">
-              <span>Quiero las mías</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+            <Link href="#comprar" className="btn-primary group text-base px-9 py-4">
+              Comprar — $199 USD
               <ArrowRight
-                size={16}
+                size={18}
                 className="transition-transform group-hover:translate-x-1"
               />
             </Link>
+            <Link href="#tecnologia" className="btn-secondary text-base px-9 py-4">
+              Explorar tecnología
+            </Link>
           </div>
 
-          <p className="text-xs text-smoke-500 mt-8 tracking-wide">
-            🚚 Envío gratis a México · Chile · Colombia · 30 días de garantía
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] tracking-[0.18em] uppercase text-smoke-500">
+            <span>Garantía 30 días</span>
+            <span className="hidden sm:inline text-ink-600">·</span>
+            <span>Envío gratis LATAM</span>
+            <span className="hidden sm:inline text-ink-600">·</span>
+            <span>Pago seguro Shopify</span>
+          </div>
         </motion.div>
       </div>
     </section>

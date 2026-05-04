@@ -15,45 +15,73 @@ export default function ProductGallery({
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  if (!images.length) {
+  // Filter out Unsplash placeholders for cleaner empty state
+  const realImages = images.filter(
+    (img) => !img.url.includes('unsplash.com')
+  );
+
+  // If we only have Unsplash mocks (no real Shopify images), show placeholder
+  if (realImages.length === 0) {
     return (
-      <div className="aspect-square-tall bg-ink-800 flex items-center justify-center">
-        <span className="text-smoke-500">Sin imagen disponible</span>
+      <div className="space-y-3">
+        {/* Main placeholder */}
+        <div className="media-placeholder aspect-product rounded-2xl">
+          <div className="media-placeholder-label">
+            <div className="text-center space-y-2">
+              <div className="text-2xl">📷</div>
+              <div className="text-smoke-400 text-xs tracking-[0.2em]">
+                FOTO PRINCIPAL
+              </div>
+              <div className="text-smoke-600 text-[9px] normal-case tracking-wider">
+                producto vista frontal · 4:5 · WebP
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnail placeholders */}
+        <div className="grid grid-cols-4 gap-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="media-placeholder aspect-square-ratio rounded-xl"
+            >
+              <div className="media-placeholder-label">
+                <span className="text-smoke-600 text-[9px]">{`0${i}`}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
-  const active = images[activeIndex];
+  const active = realImages[activeIndex];
 
   return (
-    <div className="space-y-4">
-      {/* Imagem principal */}
-      <div className="relative aspect-square-tall bg-ink-900 overflow-hidden group">
+    <div className="space-y-3">
+      {/* Main image */}
+      <div className="relative aspect-product bg-ink-900 overflow-hidden rounded-2xl group">
         <Image
           src={active.url}
           alt={active.altText || productTitle}
           fill
           priority
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
         />
-
-        {/* Edição number overlay */}
-        <div className="absolute top-6 left-6 text-[10px] tracking-[0.3em] uppercase text-bone-300 bg-ink/60 backdrop-blur-md px-3 py-1.5">
-          {String(activeIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
-        </div>
       </div>
 
       {/* Thumbnails */}
-      {images.length > 1 && (
-        <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
-          {images.slice(0, 6).map((img, i) => (
+      {realImages.length > 1 && (
+        <div className="grid grid-cols-4 gap-2">
+          {realImages.slice(0, 4).map((img, i) => (
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`relative aspect-square overflow-hidden transition-all duration-300 ${
+              className={`relative aspect-square-ratio overflow-hidden rounded-xl transition-all duration-300 ${
                 i === activeIndex
-                  ? 'ring-1 ring-ember opacity-100'
+                  ? 'ring-1 ring-bone opacity-100'
                   : 'opacity-50 hover:opacity-100'
               }`}
               aria-label={`Ver imagen ${i + 1}`}

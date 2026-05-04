@@ -1,62 +1,38 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Truck, ShieldCheck, RotateCcw, CreditCard } from 'lucide-react';
 
-const trustItems = [
-  {
-    icon: Truck,
-    title: 'Envío Gratis',
-    description: 'A todo LATAM en 10-17 días',
-  },
-  {
-    icon: ShieldCheck,
-    title: '30 Días Garantía',
-    description: 'Devolución sin preguntas',
-  },
-  {
-    icon: RotateCcw,
-    title: 'Cambios Fáciles',
-    description: 'Primera devolución gratis',
-  },
-  {
-    icon: CreditCard,
-    title: 'Pago Seguro',
-    description: 'Mercado Pago · PayPal · Visa',
-  },
+const stats = [
+  { value: '1080p', label: 'Sony HDR' },
+  { value: '40', label: 'Idiomas' },
+  { value: '12h', label: 'Batería' },
+  { value: '30d', label: 'Garantía' },
 ];
 
 export default function TrustBar() {
   return (
-    <section className="relative bg-ink-950 py-10 md:py-14 border-y border-ink-700/30">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {trustItems.map((item, i) => (
+    <section className="border-t border-b border-ink-700 bg-ink-900">
+      <div className="container-padded">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-ink-700">
+          {stats.map((stat, i) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
+              viewport={{ once: true }}
               transition={{
                 duration: 0.6,
-                delay: i * 0.1,
+                delay: i * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex flex-col items-center text-center group"
+              className="py-8 px-4 md:py-10 md:px-6 text-center"
             >
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-ember/30 flex items-center justify-center mb-4 group-hover:border-ember group-hover:bg-ember/10 transition-all duration-500">
-                <item.icon
-                  size={20}
-                  className="text-ember"
-                  strokeWidth={1.5}
-                />
+              <div className="text-3xl md:text-4xl font-semibold text-bone tracking-tight mb-1">
+                {stat.value}
               </div>
-              <h3 className="text-sm md:text-base text-bone font-medium mb-1">
-                {item.title}
-              </h3>
-              <p className="text-xs text-smoke-400 leading-relaxed">
-                {item.description}
-              </p>
+              <div className="text-[11px] tracking-[0.18em] uppercase text-smoke-400">
+                {stat.label}
+              </div>
             </motion.div>
           ))}
         </div>

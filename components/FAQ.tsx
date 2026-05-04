@@ -6,109 +6,105 @@ import { Plus } from 'lucide-react';
 
 const faqs = [
   {
-    q: '¿Funcionan con mi celular?',
-    a: 'Sí. Compatibles con iOS y Android. Solo descarga la app gratuita desde la App Store o Google Play y conecta vía Bluetooth.',
+    q: '¿Cuándo recibo mi pedido?',
+    a: 'Entre 10 y 17 días hábiles desde la confirmación del pago. Envíos a México, Colombia, Chile, Perú, Argentina y Brasil. Recibirás tracking activo desde el día 3.',
   },
   {
-    q: '¿La traducción funciona sin internet?',
-    a: 'La traducción en tiempo real y las funciones de IA requieren conexión. Para grabar fotos, videos y reproducir audio, funcionan completamente sin internet.',
+    q: '¿Cuál es la garantía?',
+    a: '30 días de devolución sin preguntas + 1 año de garantía de fábrica contra defectos de fabricación. Soporte técnico oficial en español y portugués.',
+  },
+  {
+    q: '¿Necesito instalar una app?',
+    a: 'Sí. Lensmind™ se sincroniza con la app oficial (iOS/Android) para gestionar fotos, videos, configuración y actualizaciones. La app es gratuita y compatible con iOS 14+ y Android 9+.',
+  },
+  {
+    q: '¿Funcionan sin celular?',
+    a: 'La cámara, audio y traductor offline (12 idiomas) funcionan de forma autónoma. Para funciones de IA avanzada y sincronización en la nube se requiere conexión Bluetooth con tu celular.',
   },
   {
     q: '¿Cuánto dura la batería?',
-    a: 'Hasta 10 horas escuchando música y 120 horas en modo standby. Carga completa en 1.5 horas vía USB-C.',
-  },
-  {
-    q: '¿Las lentes son graduadas?',
-    a: 'No vienen graduadas, pero son intercambiables. Tu óptico de confianza puede colocar lentes con tu graduación sin problema.',
-  },
-  {
-    q: '¿Cuánto tarda en llegar?',
-    a: 'Entre 10 y 17 días con seguimiento incluido. Recibes el código de rastreo desde el día del envío para monitorear tu pedido en tiempo real.',
-  },
-  {
-    q: '¿Y si no me gustan?',
-    a: 'Tienes 30 días para devolverlas. Sin preguntas, sin trámites complicados. Reembolso total garantizado.',
+    a: '12 horas de uso normal · 6 horas de grabación continua · 200 horas en modo standby. El estuche de carga incluido proporciona 3 cargas adicionales completas.',
   },
   {
     q: '¿Son resistentes al agua?',
-    a: 'Tienen protección contra salpicaduras y sudor — ideales para uso diario y deporte. No son aptas para sumergir bajo el agua.',
+    a: 'Certificación IPX4 — resisten salpicaduras, sudor y lluvia ligera. No son aptas para sumergir ni para uso en piscina o ducha.',
+  },
+  {
+    q: '¿Qué métodos de pago aceptan?',
+    a: 'Visa, Mastercard, American Express, MercadoPago y PIX (Brasil). Pago en cuotas disponible según país y banco emisor.',
+  },
+  {
+    q: '¿Tienen graduación o lentes intercambiables?',
+    a: 'Sí. Compatibles con lentes graduados estándar (esférico hasta -6 / +4). Servicio de instalación en óptica de confianza. Las micas claras son intercambiables por las del color que prefieras.',
   },
 ];
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-32 md:py-40 bg-ink overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24">
-          {/* Left side */}
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="text-[11px] tracking-[0.3em] uppercase text-ember mb-6 font-medium">
-              · Preguntas Frecuentes ·
-            </p>
-            <h2 className="display-heading text-5xl md:text-6xl text-balance mb-6">
-              Lo que <span className="text-ember">necesitas saber</span>.
-            </h2>
-            <p className="text-smoke-400 leading-relaxed">
-              Respuestas claras a las dudas más comunes. ¿No encuentras lo que
-              buscas?{' '}
-              <a
-                href="mailto:hola@lensmind.lat"
-                className="text-bone underline underline-offset-4 hover:text-ember transition-colors"
+    <section id="faq" className="py-24 md:py-40 bg-ink">
+      <div className="container-padded">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mb-16 md:mb-20"
+        >
+          <p className="eyebrow mb-6">Preguntas frecuentes</p>
+          <h2 className="display-heading text-display-md text-bone text-balance">
+            Lo que quieres saber.
+          </h2>
+        </motion.div>
+
+        <div className="max-w-3xl">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.04,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="border-b border-ink-700 first:border-t"
+            >
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full py-6 md:py-8 flex items-center justify-between gap-6 text-left group"
               >
-                Escríbenos.
-              </a>
-            </p>
-          </div>
+                <span className="text-bone text-base md:text-lg font-medium pr-4 group-hover:text-bone-300 transition-colors">
+                  {faq.q}
+                </span>
+                <motion.div
+                  animate={{ rotate: open === i ? 45 : 0 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex-shrink-0 text-bone-300"
+                >
+                  <Plus size={22} strokeWidth={1.5} />
+                </motion.div>
+              </button>
 
-          {/* FAQ list */}
-          <div className="divide-y divide-ink-700">
-            {faqs.map((faq, i) => {
-              const isOpen = openIndex === i;
-              return (
-                <div key={i} className="py-2">
-                  <button
-                    onClick={() => setOpenIndex(isOpen ? null : i)}
-                    className="w-full flex items-start justify-between gap-6 py-6 text-left group"
+              <AnimatePresence initial={false}>
+                {open === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
                   >
-                    <span
-                      className={`text-lg md:text-xl transition-colors duration-300 ${
-                        isOpen ? 'text-ember' : 'text-bone group-hover:text-bone-100'
-                      }`}
-                    >
-                      {faq.q}
-                    </span>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      className={`flex-shrink-0 mt-1 ${
-                        isOpen ? 'text-ember' : 'text-smoke-400'
-                      }`}
-                    >
-                      <Plus size={20} strokeWidth={1.5} />
-                    </motion.span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="text-smoke-400 leading-relaxed pb-6 max-w-2xl">
-                          {faq.a}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
+                    <p className="pb-6 md:pb-8 text-bone-300 text-[15px] leading-relaxed max-w-2xl">
+                      {faq.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

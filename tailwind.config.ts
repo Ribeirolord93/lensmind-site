@@ -8,22 +8,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Lensmind tech-luxe palette
+        // Meta/Oakley-inspired tech palette — minimal, high contrast
         ink: {
-          DEFAULT: '#0A0A0A',
+          DEFAULT: '#000000', // pure black like Meta
           950: '#050505',
-          900: '#0F0F0F',
-          800: '#1A1A1A',
-          700: '#262626',
-          600: '#333333',
+          900: '#0A0A0A',
+          800: '#141414',
+          700: '#1F1F1F',
+          600: '#2A2A2A',
+          500: '#383838',
         },
         bone: {
-          DEFAULT: '#F5F1EA',
-          50: '#FAF8F4',
-          100: '#F5F1EA',
-          200: '#E8E2D5',
-          300: '#D4CCB8',
-          400: '#B8AD92',
+          DEFAULT: '#FAFAFA', // off-white like Apple/Meta
+          50: '#FFFFFF',
+          100: '#FAFAFA',
+          200: '#F5F5F5',
+          300: '#E5E5E5',
+          400: '#D4D4D4',
         },
         ember: {
           DEFAULT: '#D97706',
@@ -43,21 +44,28 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['var(--font-fraunces)', 'serif'],
-        sans: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
-        mono: ['ui-monospace', 'monospace'],
+        sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       letterSpacing: {
-        tightest: '-0.05em',
-        widest: '0.25em',
+        tightest: '-0.06em',
+        tighter: '-0.04em',
+        tight: '-0.02em',
+        wide: '0.02em',
+        wider: '0.05em',
+        widest: '0.18em',
+      },
+      fontSize: {
+        // Meta-style massive display sizes
+        'display-xl': ['clamp(3rem, 12vw, 9rem)', { lineHeight: '0.92', letterSpacing: '-0.045em' }],
+        'display-lg': ['clamp(2.5rem, 9vw, 7rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
+        'display-md': ['clamp(2rem, 6vw, 4.5rem)', { lineHeight: '1', letterSpacing: '-0.03em' }],
+        'display-sm': ['clamp(1.5rem, 4vw, 3rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         'fade-in': 'fadeIn 1s ease-out forwards',
-        'slide-up': 'slideUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'shimmer': 'shimmer 2s linear infinite',
-        'marquee': 'marquee 40s linear infinite',
+        'reveal': 'reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
       },
       keyframes: {
         fadeUp: {
@@ -68,21 +76,10 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(60px)' },
+        reveal: {
+          '0%': { opacity: '0', transform: 'translateY(40px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        shimmer: {
-          '0%': { backgroundPosition: '-1000px 0' },
-          '100%': { backgroundPosition: '1000px 0' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-      },
-      backgroundImage: {
-        'noise': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
       },
     },
   },
