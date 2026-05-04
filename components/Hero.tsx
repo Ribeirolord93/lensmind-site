@@ -1,29 +1,29 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex flex-col bg-ink">
-      {/* Hero video placeholder — fills viewport */}
+    <section className="relative min-h-[100dvh] flex flex-col bg-ink overflow-hidden">
+      {/* Hero portrait — fills viewport */}
       <div className="absolute inset-0 z-0">
-        <div className="media-placeholder w-full h-full">
-          <div className="media-placeholder-label">
-            <div className="text-center space-y-3">
-              <div className="text-smoke-500">
-                ▶ ESPACIO RESERVADO
-              </div>
-              <div className="text-smoke-600 text-[9px]">
-                video lifestyle hero · 1920×1080 · MP4 16:9
-              </div>
-            </div>
-          </div>
-        </div>
+        <Image
+          src="/lensmind-hero-portrait.jpg"
+          alt="Lensmind™ Edition 01 — gafas inteligentes"
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[65%_center] lg:object-[60%_center]"
+        />
 
-        {/* Dark overlay for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink" />
+        {/* Editorial gradient — strong bottom for text legibility, lighter top to keep face/glasses visible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/50 to-ink" />
+        {/* Subtle left-side darkening on desktop for content area */}
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/40 to-transparent" />
       </div>
 
       {/* Content */}

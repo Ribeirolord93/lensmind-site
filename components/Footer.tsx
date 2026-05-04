@@ -1,5 +1,10 @@
 import Link from 'next/link';
 
+const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hola@lensmind.lat';
+const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
+
 const cols = [
   {
     title: 'Producto',
@@ -7,21 +12,27 @@ const cols = [
       { label: 'Lensmind™ Edition 01', href: '#producto' },
       { label: 'Tecnología', href: '#tecnologia' },
       { label: 'Comparativa', href: '#comparativa' },
-      { label: 'FAQ', href: '#faq' },
+      { label: 'Especificaciones', href: '#specs' },
     ],
   },
   {
     title: 'Soporte',
     links: [
-      { label: 'Envíos', href: '#faq' },
-      { label: 'Garantía', href: '#faq' },
-      { label: 'Devoluciones', href: '#faq' },
-      { label: 'Contacto', href: 'mailto:hola@lensmind.lat' },
+      { label: 'Envíos', href: '#faq-envios' },
+      { label: 'Garantía', href: '#faq-garantia' },
+      { label: 'Devoluciones', href: '/reembolsos' },
+      {
+        label: 'WhatsApp',
+        href: `https://wa.me/${WHATSAPP_NUMBER}`,
+        external: true,
+      },
+      { label: 'Email', href: `mailto:${CONTACT_EMAIL}` },
     ],
   },
   {
-    title: 'Legal',
+    title: 'Empresa',
     links: [
+      { label: 'Quiénes somos', href: '/quienes-somos' },
       { label: 'Términos', href: '/terminos' },
       { label: 'Privacidad', href: '/privacidad' },
       { label: 'Cookies', href: '/cookies' },
@@ -57,16 +68,23 @@ export default function Footer() {
                   {col.title}
                 </h4>
                 <ul className="space-y-3">
-                  {col.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-smoke-400 hover:text-bone transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {col.links.map((link) => {
+                    const isExternal = 'external' in link && link.external;
+                    return (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          {...(isExternal && {
+                            target: '_blank',
+                            rel: 'noopener noreferrer',
+                          })}
+                          className="text-sm text-smoke-400 hover:text-bone transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
@@ -79,7 +97,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Lensmind™. Todos los derechos reservados.
           </p>
           <p className="text-xs text-smoke-600">
-            Hecho en Latinoamérica
+            Diseñado para Latinoamérica
           </p>
         </div>
       </div>

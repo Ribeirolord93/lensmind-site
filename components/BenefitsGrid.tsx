@@ -16,7 +16,9 @@ export default function BenefitsGrid() {
         ]}
         mediaLabel="ESPACIO PARA VIDEO"
         mediaSpec="demo cámara · 16:9 · MP4"
-        aspectRatio="video"
+        aspectRatio="product"
+        imageSrc="/products/lensmind-camera-exploded.jpg"
+        imageAlt="Lensmind™ — vista explotada del módulo de cámara mostrando lentes ópticas, sensor y placa de circuito"
       />
 
       {/* 02 - IA */}
@@ -32,7 +34,9 @@ export default function BenefitsGrid() {
         ]}
         mediaLabel="ESPACIO PARA VIDEO"
         mediaSpec="demo IA por voz · 16:9 · MP4"
-        aspectRatio="video"
+        aspectRatio="product"
+        imageSrc="/lensmind-ai-eye.jpg"
+        imageAlt="Lensmind™ — primer plano del ojo visible a través de la lente, ilustrando el asistente de IA siempre presente"
         reverse
       />
 
@@ -49,7 +53,9 @@ export default function BenefitsGrid() {
         ]}
         mediaLabel="ESPACIO PARA IMAGEN"
         mediaSpec="detalle audio · 1:1 · WebP"
-        aspectRatio="square"
+        aspectRatio="landscape"
+        imageSrc="/products/lensmind-audio-wave.jpg"
+        imageAlt="Lensmind™ — onda sonora direccional emitida por la bocina integrada en la varilla"
       />
 
       {/* 04 - Traductor */}
@@ -66,6 +72,8 @@ export default function BenefitsGrid() {
         mediaLabel="ESPACIO PARA VIDEO"
         mediaSpec="demo traductor · 16:9 · MP4"
         aspectRatio="video"
+        imageSrc="/products/lensmind-translator-cafe.jpg"
+        imageAlt="Lensmind™ — conversación fluida en café entre dos personas de idiomas distintos, traducida en tiempo real"
         reverse
       />
     </div>

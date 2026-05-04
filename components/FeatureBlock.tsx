@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ReactNode } from 'react';
 
 interface FeatureBlockProps {
@@ -11,7 +12,9 @@ interface FeatureBlockProps {
   mediaLabel: string;
   mediaSpec: string;
   reverse?: boolean;
-  aspectRatio?: 'video' | 'square' | 'product';
+  aspectRatio?: 'video' | 'square' | 'product' | 'landscape';
+  imageSrc?: string;
+  imageAlt?: string;
   children?: ReactNode;
 }
 
@@ -24,12 +27,15 @@ export default function FeatureBlock({
   mediaSpec,
   reverse = false,
   aspectRatio = 'video',
+  imageSrc,
+  imageAlt,
   children,
 }: FeatureBlockProps) {
   const aspectClass = {
     video: 'aspect-video-ratio',
     square: 'aspect-square-ratio',
     product: 'aspect-product',
+    landscape: 'aspect-landscape',
   }[aspectRatio];
 
   return (
@@ -46,16 +52,29 @@ export default function FeatureBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className={`media-placeholder ${aspectClass} rounded-2xl`}
+            className={`relative ${aspectClass} rounded-2xl overflow-hidden ${
+              imageSrc ? 'bg-ink-900' : 'media-placeholder'
+            }`}
           >
-            <div className="media-placeholder-label">
-              <div className="text-center space-y-2">
-                <div>▶ {mediaLabel}</div>
-                <div className="text-smoke-600 text-[9px] tracking-wider normal-case">
-                  {mediaSpec}
+            {imageSrc ? (
+              <Image
+                src={imageSrc}
+                alt={imageAlt || title}
+                fill
+                quality={90}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="media-placeholder-label">
+                <div className="text-center space-y-2">
+                  <div>▶ {mediaLabel}</div>
+                  <div className="text-smoke-600 text-[9px] tracking-wider normal-case">
+                    {mediaSpec}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* Text side */}

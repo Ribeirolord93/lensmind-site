@@ -131,6 +131,34 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
                 variantId={variant?.id || ''}
                 available={variant?.availableForSale ?? false}
               />
+
+              {/* WhatsApp discreto — não FAB, só link textual */}
+              <a
+                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808'}?text=${encodeURIComponent('Hola! Tengo dudas sobre Lensmind™ Edition 01.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 text-sm text-smoke-400 hover:text-bone transition-colors group"
+              >
+                <span>¿Dudas? Chat por WhatsApp</span>
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
+
+            {/* Trust badges visuais */}
+            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-ink-800">
+              <div className="flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-smoke-500">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Pago seguro SSL
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">VISA</span>
+                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">MC</span>
+                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">AMEX</span>
+                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">MP</span>
+              </div>
             </div>
 
             {/* Delivery info */}
@@ -156,7 +184,7 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
                   Envío
                 </p>
                 <p className="text-sm text-bone-200">
-                  Gratis a México, Chile, Colombia
+                  Internacional · tracking activo
                 </p>
               </div>
               <div>
@@ -164,7 +192,7 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
                   Pago
                 </p>
                 <p className="text-sm text-bone-200">
-                  Visa · Mastercard · MercadoPago
+                  Visa · MC · MP · cuotas
                 </p>
               </div>
             </div>

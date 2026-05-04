@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import CookieBanner from '@/components/CookieBanner';
+import Analytics from '@/components/Analytics';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -44,6 +46,9 @@ export const metadata: Metadata = {
     title: 'Lensmind™ — Gafas Inteligentes con IA',
     description: 'Cámara 1080p, IA por voz y traductor en tiempo real.',
   },
+  alternates: {
+    canonical: '/',
+  },
   robots: {
     index: true,
     follow: true,
@@ -65,6 +70,8 @@ export default function RootLayout({
     <html lang="es" className={inter.variable}>
       <body className="font-sans bg-ink text-bone antialiased">
         {children}
+        <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );

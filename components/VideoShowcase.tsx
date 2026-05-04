@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function VideoShowcase() {
   return (
@@ -23,30 +24,27 @@ export default function VideoShowcase() {
         </motion.div>
       </div>
 
-      {/* Cinema video placeholder */}
+      {/* Cinematic lifestyle photo */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 1.2 }}
-        className="relative w-full"
+        className="relative w-full aspect-video-ratio bg-ink-900 overflow-hidden"
       >
-        <div className="media-placeholder aspect-cinema">
-          <div className="media-placeholder-label">
-            <div className="text-center space-y-3">
-              <div className="text-3xl">▶</div>
-              <div className="text-smoke-400 text-sm tracking-[0.2em]">
-                ESPACIO RESERVADO
-              </div>
-              <div className="text-smoke-600 text-xs tracking-wider normal-case">
-                video lifestyle cinematográfico · 21:9 · MP4 · ej: ciclista, fotógrafo, viajero
-              </div>
-            </div>
-          </div>
-        </div>
+        <Image
+          src="/lensmind-lifestyle-cdmx.jpg"
+          alt="Lensmind™ — joven en el centro histórico de Ciudad de México durante la hora dorada"
+          fill
+          quality={88}
+          sizes="100vw"
+          className="object-cover"
+        />
+        {/* Subtle vignette for cinematic feel */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent pointer-events-none" />
       </motion.div>
 
-      {/* Caption below video */}
+      {/* Caption below photo */}
       <div className="container-padded py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
