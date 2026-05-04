@@ -25,7 +25,7 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
   return (
     <section
       id="producto"
-      className="relative py-24 md:py-40 bg-ink"
+      className="relative py-16 md:py-28 bg-ink"
     >
       <div className="container-padded">
         {/* Section heading */}
@@ -34,7 +34,7 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mb-16 md:mb-24"
+          className="max-w-4xl mb-12 md:mb-16"
         >
           <p className="eyebrow mb-6">Producto</p>
           <h2 className="display-heading text-display-lg text-bone text-balance">
@@ -77,10 +77,15 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
               </div>
             )}
 
-            {/* Title */}
-            <h3 className="display-heading text-3xl md:text-4xl lg:text-5xl text-bone tracking-tight leading-[1.05]">
-              {product.title}
-            </h3>
+            {/* Title — brand-controlled, ignores Shopify's keyword-stuffed title */}
+            <div className="space-y-2">
+              <h3 className="display-heading text-3xl md:text-4xl lg:text-5xl text-bone tracking-tight leading-[1.05]">
+                Lensmind™ Edition 01
+              </h3>
+              <p className="text-bone-300 text-sm md:text-base">
+                Gafas inteligentes con IA · Cámara 1080p · Traductor 40 idiomas
+              </p>
+            </div>
 
             {/* Price */}
             <div className="py-6 border-y border-ink-700">

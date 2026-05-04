@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 
 export default function FinalCTA() {
   return (
-    <section className="py-32 md:py-48 bg-ink relative overflow-hidden border-t border-ink-700">
+    <section className="py-20 md:py-32 bg-ink relative overflow-hidden border-t border-ink-700">
       {/* Decorative ember glow */}
       <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
         <div className="w-[600px] h-[600px] bg-ember rounded-full blur-[200px]" />
@@ -22,7 +22,7 @@ export default function FinalCTA() {
         >
           <p className="eyebrow mb-8">Lensmind™ Edition 01</p>
 
-          <h2 className="display-heading text-display-lg text-bone text-balance mb-10">
+          <h2 className="display-heading text-display-lg text-bone text-balance mb-8">
             El futuro está
             <br />
             en tu mirada.

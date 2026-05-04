@@ -73,7 +73,7 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section id="faq" className="py-24 md:py-40 bg-ink">
+    <section id="faq" className="py-16 md:py-28 bg-ink">
       {/* JSON-LD FAQPage — Google rich results */}
       <script
         type="application/ld+json"
@@ -99,7 +99,7 @@ export default function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mb-16 md:mb-20"
+          className="max-w-3xl mb-10 md:mb-14"
         >
           <p className="eyebrow mb-6">Preguntas frecuentes</p>
           <h2 className="display-heading text-display-md text-bone text-balance">

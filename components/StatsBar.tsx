@@ -29,7 +29,7 @@ export default function SpecsBar() {
   return (
     <section
       id="specs"
-      className="py-24 md:py-32 bg-ink-900 border-t border-b border-ink-700"
+      className="py-16 md:py-24 bg-ink-900 border-t border-b border-ink-700"
     >
       <div className="container-padded">
         <motion.div
@@ -37,7 +37,7 @@ export default function SpecsBar() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-12 md:mb-16"
+          className="mb-10 md:mb-12"
         >
           <p className="eyebrow mb-3">Especificaciones</p>
           <h2 className="display-heading text-display-sm text-bone text-balance max-w-2xl">

@@ -12,26 +12,29 @@ interface ProductGalleryProps {
 // Local product photos — generated for Lensmind™ Edition 01.
 // When env flag is enabled (or Shopify has no real photos), the gallery
 // uses these instead of supplier photos with promotional text overlays.
+// Local product photos — actual product photography of Lensmind™ Edition 01.
+// These are used by default; supplier Shopify photos with promotional overlays
+// can be enabled via NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true.
 const LOCAL_PHOTOS = [
   {
-    url: '/products/lensmind-front.jpg',
-    alt: 'Lensmind™ Edition 01 — vista frontal con módulo de cámara y micrófonos visibles',
+    url: '/products/lensmind-product-front.jpg',
+    alt: 'Lensmind™ Edition 01 — vista frontal mostrando lentes claras e oscuras intercambiables',
     aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-top.jpg',
-    alt: 'Lensmind™ Edition 01 — vista superior mostrando el perfil completo',
-    aspectRatio: 'video' as const,
+    url: '/products/lensmind-product-3quarter.jpg',
+    alt: 'Lensmind™ Edition 01 — vista tres cuartos con lente removible y sistema modular visible',
+    aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-macro.jpg',
-    alt: 'Lensmind™ Edition 01 — detalle macro del puente y acetato matte',
-    aspectRatio: 'square' as const,
+    url: '/products/lensmind-product-camera-detail.jpg',
+    alt: 'Lensmind™ Edition 01 — detalle macro de la cámara integrada y pines de carga dorados',
+    aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-side-detail.jpg',
-    alt: 'Lensmind™ Edition 01 — detalle lateral mostrando cámara integrada y circuitos',
-    aspectRatio: 'landscape' as const,
+    url: '/products/lensmind-product-side.jpg',
+    alt: 'Lensmind™ Edition 01 — perfil lateral con botón de control y diseño slim',
+    aspectRatio: 'product' as const,
   },
 ];
 
@@ -41,10 +44,11 @@ export default function ProductGallery({
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // When env flag is true, prefer local product photos (clean, no overlay).
-  // This is the default while supplier photos with text overlays are in Shopify.
-  const forcePlaceholder =
-    process.env.NEXT_PUBLIC_FORCE_PRODUCT_PLACEHOLDER === 'true';
+  // DEFAULT: use local clean photos (the 4 we generated).
+  // Set NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true ONLY when Shopify product photos
+  // are clean (no promotional text overlays). Until then, local photos win.
+  const useShopifyPhotos =
+    process.env.NEXT_PUBLIC_USE_SHOPIFY_PHOTOS === 'true';
 
   // Filter out Unsplash mock placeholders
   const realShopifyImages = images.filter(
@@ -52,10 +56,9 @@ export default function ProductGallery({
   );
 
   // Decide which set to use:
-  //  1. If forcing placeholder mode → use local photos
-  //  2. If Shopify has real images → use them
-  //  3. Otherwise → fallback to local photos
-  const useLocal = forcePlaceholder || realShopifyImages.length === 0;
+  //  - useShopifyPhotos=true AND Shopify has real images → use Shopify
+  //  - otherwise → use local photos (default, safe path)
+  const useLocal = !useShopifyPhotos || realShopifyImages.length === 0;
 
   if (useLocal) {
     const active = LOCAL_PHOTOS[activeIndex];

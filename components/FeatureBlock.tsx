@@ -39,7 +39,7 @@ export default function FeatureBlock({
   }[aspectRatio];
 
   return (
-    <section className="py-24 md:py-40 bg-ink overflow-hidden">
+    <section className="py-16 md:py-28 bg-ink overflow-hidden">
       <div className="container-padded">
         <div
           className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${

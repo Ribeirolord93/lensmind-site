@@ -33,7 +33,7 @@ const benefits = [
 
 export default function LaunchSection() {
   return (
-    <section className="py-24 md:py-40 bg-ink">
+    <section className="py-16 md:py-28 bg-ink">
       <div className="container-padded">
         {/* Heading */}
         <motion.div
@@ -41,7 +41,7 @@ export default function LaunchSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mb-16 md:mb-24"
+          className="max-w-3xl mb-12 md:mb-16"
         >
           <p className="eyebrow mb-6">Lanzamiento</p>
           <h2 className="display-heading text-display-md text-bone mb-6 text-balance">
@@ -57,7 +57,7 @@ export default function LaunchSection() {
         </motion.div>
 
         {/* Benefits grid */}
-        <div className="grid sm:grid-cols-2 gap-px bg-ink-700 mb-16 md:mb-20">
+        <div className="grid sm:grid-cols-2 gap-px bg-ink-700 mb-12 md:mb-16">
           {benefits.map((b, i) => (
             <motion.div
               key={b.n}

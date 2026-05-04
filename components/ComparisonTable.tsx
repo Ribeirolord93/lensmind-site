@@ -36,7 +36,7 @@ export default function ComparisonTable() {
   return (
     <section
       id="comparativa"
-      className="py-24 md:py-40 bg-ink-900 border-t border-ink-700"
+      className="py-16 md:py-28 bg-ink-900 border-t border-ink-700"
     >
       <div className="container-padded">
         <motion.div
@@ -44,7 +44,7 @@ export default function ComparisonTable() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mb-16 md:mb-20"
+          className="max-w-3xl mb-12 md:mb-16"
         >
           <p className="eyebrow mb-6">Comparativa</p>
           <h2 className="display-heading text-display-md text-bone mb-6 text-balance">

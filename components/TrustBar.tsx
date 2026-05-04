@@ -25,7 +25,7 @@ export default function TrustBar() {
                 delay: i * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="py-8 px-4 md:py-10 md:px-6 text-center"
+              className="py-6 px-4 md:py-8 md:px-6 text-center"
             >
               <div className="text-3xl md:text-4xl font-semibold text-bone tracking-tight mb-1">
                 {stat.value}

@@ -7,7 +7,7 @@ export default function VideoShowcase() {
   return (
     <section className="bg-ink py-0">
       {/* Eyebrow + headline */}
-      <div className="container-padded pt-24 md:pt-40 pb-16 md:pb-24">
+      <div className="container-padded pt-16 md:pt-24 pb-10 md:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function VideoShowcase() {
       </motion.div>
 
       {/* Caption below photo */}
-      <div className="container-padded py-16 md:py-24">
+      <div className="container-padded py-10 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
