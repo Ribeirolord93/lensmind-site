@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createCart } from '@/lib/shopify';
+import { createCart, isShopifyConfigured } from '@/lib/shopify';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,6 +10,14 @@ export async function POST(request: NextRequest) {
         { error: 'variantId es requerido' },
         { status: 400 }
       );
+    }
+
+    // Modo demo — Shopify ainda não foi configurada
+    if (!isShopifyConfigured()) {
+      return NextResponse.json({
+        demoMode: true,
+        message: 'Checkout en preparación — disponible próximamente',
+      });
     }
 
     const cart = await createCart([
@@ -23,12 +31,23 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Erro ao criar carrinho:', error);
+
+    if (
+      error instanceof Error &&
+      error.message === 'CHECKOUT_NOT_AVAILABLE'
+    ) {
+      return NextResponse.json({
+        demoMode: true,
+        message: 'Checkout en preparación',
+      });
+    }
+
     return NextResponse.json(
       {
         error:
           error instanceof Error
             ? error.message
-            : 'Erro desconhecido ao criar carrinho',
+            : 'Error desconocido al crear carrito',
       },
       { status: 500 }
     );

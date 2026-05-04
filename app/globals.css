@@ -179,6 +179,18 @@
   .aspect-cinema { aspect-ratio: 21 / 9; }
   .aspect-square-tall { aspect-ratio: 4 / 5; }
 
+  /* Safe area pra iPhone (notch + home indicator) */
+  .safe-area-padding {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* Body padding quando sticky CTA está visível em mobile */
+  @media (max-width: 1023px) {
+    main {
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+  }
+
   /* Tipografia editorial */
   .text-display {
     font-family: var(--font-fraunces), serif;

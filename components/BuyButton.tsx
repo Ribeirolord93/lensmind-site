@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ShoppingBag, Loader2, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Loader2, ArrowRight, MessageCircle } from 'lucide-react';
 
 interface BuyButtonProps {
   variantId: string;
@@ -16,6 +16,7 @@ export default function BuyButton({
 }: BuyButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [demoMode, setDemoMode] = useState(false);
 
   async function handleBuy() {
     if (!available) return;
@@ -32,12 +33,19 @@ export default function BuyButton({
         }),
       });
 
-      if (!res.ok) {
-        throw new Error('No se pudo crear el carrito');
+      const json = await res.json();
+
+      if (json.demoMode || json.error === 'CHECKOUT_NOT_AVAILABLE') {
+        setDemoMode(true);
+        setLoading(false);
+        return;
       }
 
-      const { checkoutUrl } = await res.json();
-      window.location.href = checkoutUrl;
+      if (!res.ok || !json.checkoutUrl) {
+        throw new Error(json.error || 'No se pudo crear el carrito');
+      }
+
+      window.location.href = json.checkoutUrl;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido');
       setLoading(false);
@@ -52,6 +60,51 @@ export default function BuyButton({
       >
         Agotado temporalmente
       </button>
+    );
+  }
+
+  if (demoMode) {
+    return (
+      <div className="space-y-3 animate-fade-in">
+        <div className="glass-strong p-5 rounded-sm border border-ember/30">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⏰</span>
+            <div className="flex-1">
+              <p className="text-[11px] tracking-[0.25em] uppercase text-ember mb-1.5 font-medium">
+                Próximamente
+              </p>
+              <p className="text-sm text-bone-200 mb-2 leading-relaxed">
+                Estamos finalizando los últimos detalles del checkout. Se
+                lanzará oficialmente en las próximas horas.
+              </p>
+              <p className="text-xs text-smoke-400 mb-3">
+                Mientras tanto, contáctanos para reservar tu Lensmind con
+                acceso anticipado.
+              </p>
+              <a
+                href="https://wa.me/5521967440808?text=Hola!%20Quiero%20reservar%20mi%20Lensmind%20con%20acceso%20anticipado"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs tracking-wider uppercase text-ember hover:text-ember-400 transition-colors font-medium"
+              >
+                <MessageCircle size={14} />
+                <span>Reservar por WhatsApp</span>
+                <ArrowRight size={12} />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            setDemoMode(false);
+            setError(null);
+          }}
+          className="text-xs text-smoke-500 hover:text-smoke-400 transition-colors w-full text-center"
+        >
+          ← Cerrar
+        </button>
+      </div>
     );
   }
 

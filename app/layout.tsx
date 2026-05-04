@@ -43,14 +43,7 @@ export const metadata: Metadata = {
     title: 'Lensmind™ — Gafas Inteligentes con IA',
     description:
       'La nueva generación de gafas inteligentes. Cámara, IA y traductor en tiempo real por $199 USD.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Lensmind Smart Glasses',
-      },
-    ],
+    // OG image gerada automaticamente via app/opengraph-image.tsx
   },
   twitter: {
     card: 'summary_large_image',

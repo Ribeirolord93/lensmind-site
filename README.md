@@ -2,198 +2,123 @@
 
 Site oficial da Lensmind: gafas inteligentes con IA para o mercado LATAM.
 
-**Stack:**
-- ⚡ Next.js 14 (App Router) + TypeScript
-- 🎨 Tailwind CSS + Framer Motion
-- 🛒 Shopify Storefront API (GraphQL)
-- 🚀 Deploy: Netlify
+**Stack:** Next.js 14 + TypeScript + Tailwind + Framer Motion + Shopify Storefront API + Netlify
 
 ---
 
-## 🎬 Setup Local
+## 🎬 Modo Mock — Funciona SEM configurar Shopify!
 
-### 1. Instalar dependências
+**Você pode fazer deploy IMEDIATAMENTE, sem precisar de token Shopify.**
 
-```bash
-npm install
-```
+O site detecta automaticamente:
+- ❌ Sem token Shopify → exibe produto **mock** com dados reais do Lensmind
+- ✅ Com token Shopify → busca produto real automaticamente
 
-### 2. Configurar Shopify Storefront API
-
-No painel da Shopify:
-
-1. Acesse **Configurações → Apps e canais de venda → Desenvolver apps**
-2. Clique em **Criar um app**
-3. Nome: `Lensmind Headless`
-4. Em **Configuração**, clique em **Configurar Storefront API**
-5. Marque os escopos:
-   - ✅ `unauthenticated_read_product_listings`
-   - ✅ `unauthenticated_read_product_inventory`
-   - ✅ `unauthenticated_write_checkouts`
-   - ✅ `unauthenticated_read_checkouts`
-   - ✅ `unauthenticated_read_content`
-6. Salve e clique em **Instalar app**
-7. Copie o **Storefront API access token**
-
-### 3. Criar `.env.local`
-
-```bash
-cp .env.example .env.local
-```
-
-Edite com seus valores:
-
-```env
-SHOPIFY_STORE_DOMAIN=lensmind.myshopify.com
-SHOPIFY_STOREFRONT_ACCESS_TOKEN=seu_token_aqui
-SHOPIFY_STOREFRONT_API_VERSION=2024-10
-NEXT_PUBLIC_SITE_URL=https://lensmind.lat
-```
-
-### 4. Rodar localmente
-
-```bash
-npm run dev
-```
-
-Abra [http://localhost:3000](http://localhost:3000)
+Não precisa mudar código nenhum. Só configurar a env var depois.
 
 ---
 
-## 🚀 Deploy no Netlify
+## 🚀 Deploy IMEDIATO no Netlify
 
-### Opção A — Via CLI (mais rápido)
+### Via GitHub Desktop (recomendado)
 
-```bash
-npm install -g netlify-cli
-netlify login
-netlify init
-netlify deploy --prod
-```
+Você já fez isso! Repositório em `github.com/Ribeirolord93/lensmind-site`.
 
-### Opção B — Via UI (recomendado)
+### Conectar Netlify ao repositório
 
-1. Faça push do projeto para um repositório Git (GitHub/GitLab)
-2. Acesse [app.netlify.com](https://app.netlify.com)
-3. Clique em **Add new site → Import an existing project**
-4. Conecte ao repositório
-5. Configurações de build (já vêm do `netlify.toml`):
+1. Acessa [app.netlify.com](https://app.netlify.com) e faz login com GitHub
+2. **Add new site → Import an existing project → Deploy with GitHub**
+3. Seleciona o repositório `lensmind-site`
+4. Configurações de build (vêm do `netlify.toml`):
    - Build command: `npm run build`
    - Publish directory: `.next`
-6. Em **Environment variables**, adicione:
-   - `SHOPIFY_STORE_DOMAIN`
-   - `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-   - `SHOPIFY_STOREFRONT_API_VERSION`
-   - `NEXT_PUBLIC_SITE_URL`
-7. Clique em **Deploy site**
+5. **NÃO precisa adicionar env vars agora** (modo mock funciona sem elas)
+6. Clica em **Deploy site**
 
-### Conectar domínio lensmind.lat
-
-1. No Netlify: **Domain settings → Add custom domain**
-2. Digite `lensmind.lat` e siga as instruções
-3. Na Namecheap (ou onde comprou): atualize os DNS conforme Netlify indicar
-4. SSL é automático (~10 min após DNS propagar)
+🎉 **Site no ar em 2-4min!**
 
 ---
 
-## 📁 Estrutura
+## 🔑 Quando tiver o token Shopify
 
-```
-lensmind-site/
-├── app/
-│   ├── api/cart/route.ts      # API: criar checkout
-│   ├── globals.css            # Estilos globais + utilitários
-│   ├── layout.tsx             # Root layout + fontes + SEO
-│   ├── not-found.tsx          # Página 404
-│   └── page.tsx               # Home (single-product)
-├── components/
-│   ├── Header.tsx             # Header sticky com glassmorphism
-│   ├── Hero.tsx               # Hero cinematográfico
-│   ├── Marquee.tsx            # Faixa horizontal infinita
-│   ├── BenefitsGrid.tsx       # Grid 4 benefícios
-│   ├── ProductShowcase.tsx    # Galeria + Buy
-│   ├── ProductGallery.tsx     # Galeria editorial
-│   ├── BuyButton.tsx          # CTA → checkout Shopify
-│   ├── ComparisonTable.tsx    # Ray-Ban Meta vs Lensmind
-│   ├── StatsBar.tsx           # Stats de mercado
-│   ├── FAQ.tsx                # Acordeão animado
-│   ├── FinalCTA.tsx           # Última conversão
-│   └── Footer.tsx             # Newsletter + links
-├── lib/
-│   ├── shopify.ts             # Client + helpers
-│   └── queries.ts             # GraphQL queries
-├── types/
-│   └── shopify.ts             # Types da API
-├── netlify.toml               # Config de deploy
-├── next.config.js
-├── tailwind.config.ts
-└── tsconfig.json
-```
+### 1. Pegar token
+
+Após instalar app **Headless** (espera 1h após mudar plano):
+1. Admin Shopify → **Headless** (canal de venda)
+2. **Add storefront** → nome: `Lensmind LATAM`
+3. **Storefront API permissions** → Edit:
+   - `unauthenticated_read_product_listings` ✅
+   - `unauthenticated_read_product_inventory` ✅
+   - `unauthenticated_write_checkouts` ✅
+   - `unauthenticated_read_checkouts` ✅
+   - `unauthenticated_read_content` ✅
+4. **Reveal Private access token** → copiar
+
+### 2. Adicionar no Netlify
+
+**Site settings → Environment variables → Add a variable:**
+
+| Key | Value |
+|---|---|
+| `SHOPIFY_STORE_DOMAIN` | `lensmind.myshopify.com` |
+| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | `shpat_xxx...` |
+| `SHOPIFY_STOREFRONT_API_VERSION` | `2024-10` |
+| `NEXT_PUBLIC_SITE_URL` | `https://lensmind.lat` |
+
+3. **Trigger deploy → Deploy site**
+4. Em ~3min site refaz build com produto REAL.
 
 ---
 
-## 🎨 Design System
+## 🌐 Conectar domínio lensmind.lat
 
-### Paleta
-
-- **Ink** `#0A0A0A` — fundo principal (preto profundo)
-- **Bone** `#F5F1EA` — texto principal (off-white quente)
-- **Ember** `#D97706` — accent (laranja Lensmind)
-- **Smoke** `#737373` — texto secundário
-
-### Tipografia
-
-- **Display:** Fraunces (serif italic editorial)
-- **Body:** Manrope (sans-serif refinada)
-
-### Princípios
-
-- Mobile-first
-- Animações com `cubic-bezier(0.22, 1, 0.36, 1)` (natural easing)
-- Glassmorphism em cards premium
-- Grain overlay sutil pra textura
-- Tipografia editorial italic em headlines
+1. Netlify: **Domain settings → Add custom domain → lensmind.lat**
+2. Netlify mostra os DNS records necessários
+3. Namecheap → Domain List → Manage `lensmind.lat` → Advanced DNS
+4. Adiciona records (CNAME ou A) que o Netlify pediu
+5. SSL automático após DNS propagar (15min-24h)
 
 ---
 
-## 🛠️ Performance
+## 🎨 Design
 
-Targets:
+- **Display font:** Fraunces italic (editorial premium)
+- **Body font:** Manrope
+- **Cores:** Ink #0A0A0A · Bone #F5F1EA · Ember #D97706
+- **Vibe:** Tech-luxe LATAM (Apple Vision + Nothing + Hemios)
+
+---
+
+## 🛠️ Performance Targets
+
 - Lighthouse Performance: 95+
 - LCP: < 1.5s
 - CLS: 0
 - Bundle JS: < 100kb
 
-Otimizações:
-- ISR (revalidação a cada 60s)
-- Imagens AVIF/WebP via Next/Image
-- Edge caching no Netlify
-- Code splitting automático
-- Fontes via next/font (sem FOUT)
-
 ---
 
 ## 🐛 Troubleshooting
 
-### "Shopify env vars não configuradas"
-→ Verifique se `.env.local` existe e tem os valores corretos.
+**Site mostra produto mock mesmo com env vars configuradas:**
+→ Confere se token tem 20+ caracteres
+→ Trigger redeploy
 
-### Produto não aparece
-→ Verifique se o produto está com status **Ativo** no Shopify (não **Rascunho**) e se está atribuído ao **canal de vendas Online Store**.
+**Botão "Comprar" mostra "Próximamente":**
+→ Modo demo ativo. Normal antes de conectar Shopify.
 
-### Checkout não abre
-→ Verifique se o Storefront API token tem permissão `unauthenticated_write_checkouts`.
-
-### Deploy quebra no Netlify
-→ Confirme que todas as 4 env vars estão configuradas no painel do Netlify.
+**Imagens não carregam:**
+→ Verifica `next.config.js` (deve ter `cdn.shopify.com` e `images.unsplash.com`)
 
 ---
 
-## 📞 Próximos passos (roadmap)
+## 🗺️ Rotas
 
-- [ ] Configurar pagamentos no Shopify (Mercado Pago, Stripe, PayPal)
-- [ ] Adicionar Pixel Meta + TikTok no `layout.tsx`
-- [ ] Adicionar imagem OG (`/public/og-image.jpg`)
-- [ ] Criar páginas de políticas (privacidad, devoluciones, etc.)
-- [ ] Integrar Judge.me ou similar para reviews
-- [ ] Adicionar Google Analytics 4
+| URL | Descrição |
+|---|---|
+| `/` | Home com 11 seções de conversão |
+| `/productos/[handle]` | Página de produto individual (SEO-friendly) |
+| `/api/cart` | API checkout (POST) |
+| `/sitemap.xml` | Gerado automaticamente, inclui todos os produtos |
+| `/robots.txt` | Permite tudo, bloqueia /api/ |
+| `/opengraph-image` | OG card 1200×630 dinâmico para WhatsApp/IG/Twitter |
