@@ -14,6 +14,7 @@ import Footer from '@/components/Footer';
 
 import { getFirstProduct } from '@/lib/shopify';
 import { MOCK_PRODUCT } from '@/lib/mock-product';
+import ProductPageTracker from '@/components/ProductPageTracker';
 
 // ISR: revalida a cada 60s
 export const revalidate = 60;
@@ -88,6 +89,12 @@ export default async function HomePage() {
 
       <Header />
       <main>
+        <ProductPageTracker
+          contentId={variant?.id || 'lensmind-edition-01'}
+          contentName="Lensmind Edition 01"
+          value={parseFloat(price)}
+          currency={currency}
+        />
         {/* Hero — fullscreen video placeholder + headline */}
         <Hero />
 

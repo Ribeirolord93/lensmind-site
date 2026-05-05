@@ -2,17 +2,27 @@
 
 import { useState } from 'react';
 import { ShoppingBag, Loader2, ArrowRight, MessageCircle } from 'lucide-react';
+import { fireMetaEvent } from '@/lib/fbq-helpers';
 
 interface BuyButtonProps {
   variantId: string;
   available: boolean;
   className?: string;
+  /** Used for AddToCart/InitiateCheckout Meta events */
+  contentId?: string;
+  contentName?: string;
+  value?: number;
+  currency?: string;
 }
 
 export default function BuyButton({
   variantId,
   available,
   className = '',
+  contentId,
+  contentName = 'Lensmind Edition 01',
+  value = 199,
+  currency = 'USD',
 }: BuyButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +54,36 @@ export default function BuyButton({
       if (!res.ok || !json.checkoutUrl) {
         throw new Error(json.error || 'No se pudo crear el carrito');
       }
+
+      const ids = contentId ? [contentId] : [variantId];
+
+      // Fire AddToCart (browser pixel + CAPI server-side, shared event_id)
+      fireMetaEvent({
+        eventName: 'AddToCart',
+        customData: {
+          contentIds: ids,
+          contentName,
+          contentType: 'product',
+          value,
+          currency,
+        },
+      });
+
+      // Fire InitiateCheckout right before redirect
+      fireMetaEvent({
+        eventName: 'InitiateCheckout',
+        customData: {
+          contentIds: ids,
+          contentName,
+          contentType: 'product',
+          value,
+          currency,
+          numItems: 1,
+        },
+      });
+
+      // Small delay to give beacons time to fire before navigating away
+      await new Promise((r) => setTimeout(r, 200));
 
       window.location.href = json.checkoutUrl;
     } catch (err) {
