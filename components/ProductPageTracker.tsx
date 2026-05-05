@@ -1,10 +1,12 @@
 'use client';
 
 /**
- * ProductPageTracker — fires ViewContent + persists tracking IDs to Shopify cart.
+ * ProductPageTracker — fires ViewContent once consent is granted.
  *
  * Drop this once on your product page (e.g. inside app/page.tsx).
- * It waits for marketing consent before firing.
+ * It reads cookie consent from localStorage and waits for marketing consent
+ * before firing. The pixel + CAPI events share the same event_id (handled
+ * by fireMetaEvent internally) so Meta deduplicates browser + server hits.
  *
  * Usage:
  *   <ProductPageTracker
@@ -16,15 +18,13 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { fireMetaEvent, persistTrackingToShopifyCart } from '@/lib/fbq-helpers';
+import { fireMetaEvent } from '@/lib/fbq-helpers';
 
 interface ProductPageTrackerProps {
   contentId: string;
   contentName: string;
   value: number;
   currency: string;
-  /** Shopify cart ID, if available. If passed, also persists fbp/fbc/event_id to cart attributes. */
-  cartId?: string;
 }
 
 type Consent = { necessary: boolean; analytics: boolean; marketing: boolean };
@@ -34,7 +34,6 @@ export default function ProductPageTracker({
   contentName,
   value,
   currency,
-  cartId,
 }: ProductPageTrackerProps) {
   const fired = useRef(false);
   const [consent, setConsent] = useState<Consent | null>(null);
@@ -67,20 +66,14 @@ export default function ProductPageTracker({
     fireMetaEvent({
       eventName: 'ViewContent',
       customData: {
-        content_ids: [contentId],
-        content_name: contentName,
-        content_type: 'product',
+        contentIds: [contentId],
+        contentName,
+        contentType: 'product',
         value,
         currency,
       },
     });
-
-    if (cartId) {
-      persistTrackingToShopifyCart(cartId).catch(() => {
-        /* non-blocking */
-      });
-    }
-  }, [consent, contentId, contentName, value, currency, cartId]);
+  }, [consent, contentId, contentName, value, currency]);
 
   return null;
 }
