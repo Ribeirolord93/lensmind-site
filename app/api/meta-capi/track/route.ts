@@ -4,16 +4,22 @@
  * Generic CAPI endpoint called from the browser via fireMetaEvent().
  * Receives event details + fbp/fbc cookies + auto-extracts IP/UA from request.
  *
- * Used for: PageView, ViewContent, AddToCart, InitiateCheckout, Search.
+ * Used for: PageView, ViewContent, AddToCart, InitiateCheckout, Search, Lead.
  * NOT for: Purchase (that comes from /api/webhooks/shopify-order with full order data).
  *
  * Why not Purchase here too? Because Purchase from the thank-you page can be
  * blocked by ad blockers or browser closing. Shopify webhook is server-to-server,
  * 100% reliable. We use that as source of truth for revenue events.
+ *
+ * v15 changes:
+ *   - Added rate limiting (60 req/min per IP)
+ *   - Added Origin allowlist check
+ *   - Accepts 'Lead' event
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sendCapiEvent, type CapiEvent, type MetaEventName } from '@/lib/meta-capi';
+import { rateLimit, getClientIp, isAllowedOrigin } from '@/lib/rate-limit';
 
 // Edge-incompatible because we use crypto for hashing. Use Node runtime.
 export const runtime = 'nodejs';
@@ -50,22 +56,39 @@ const ALLOWED_EVENTS: MetaEventName[] = [
   'CompleteRegistration',
 ];
 
-/**
- * Extracts the client IP. Netlify forwards real IP in x-nf-client-connection-ip.
- * Cloudflare uses cf-connecting-ip. We try several headers.
- */
-function getClientIp(req: NextRequest): string | undefined {
-  const headers = req.headers;
-  return (
-    headers.get('x-nf-client-connection-ip') ||
-    headers.get('cf-connecting-ip') ||
-    headers.get('x-real-ip') ||
-    headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    undefined
-  );
-}
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://lensmind.lat';
+const ALLOWED_ORIGINS = [
+  SITE_URL,
+  SITE_URL.replace('https://', 'https://www.'),
+  // Netlify preview/branch deploys
+  'https://neon-sopapillas-10fc4d.netlify.app',
+];
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  // 1. Origin check — block requests from unknown origins
+  if (!isAllowedOrigin(req, ALLOWED_ORIGINS)) {
+    console.warn('[api/meta-capi/track] Blocked request from disallowed origin', {
+      origin: req.headers.get('origin'),
+    });
+    return NextResponse.json({ ok: false, error: 'invalid_origin' }, { status: 403 });
+  }
+
+  // 2. Rate limit — 60 req/min per IP (generous for legit users, blocks abuse)
+  const ip = getClientIp(req);
+  const rl = rateLimit(`capi:${ip}`, { limit: 60, windowMs: 60_000 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { ok: false, error: 'rate_limited' },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': String(Math.ceil((rl.resetAt - Date.now()) / 1000)),
+        },
+      }
+    );
+  }
+
+  // 3. Parse body
   let body: RequestBody;
   try {
     body = (await req.json()) as RequestBody;
@@ -73,7 +96,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, error: 'invalid_json' }, { status: 400 });
   }
 
-  // Validation
+  // 4. Validation
   if (!body.eventName || !ALLOWED_EVENTS.includes(body.eventName)) {
     return NextResponse.json(
       { ok: false, error: 'invalid_event_name', allowed: ALLOWED_EVENTS },
@@ -92,6 +115,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
+  // 5. Build CAPI event
   const event: CapiEvent = {
     eventName: body.eventName,
     eventId: body.eventId,
@@ -100,7 +124,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     optOut: body.optOut,
     userData: {
       ...body.userData,
-      clientIpAddress: getClientIp(req),
+      clientIpAddress: ip !== 'unknown' ? ip : undefined,
       clientUserAgent: req.headers.get('user-agent') ?? undefined,
     },
     customData: body.customData,
@@ -110,7 +134,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   if (result.error) {
     // Don't expose internal error to client. Log server-side, return generic.
-    console.error('[api/meta-capi/track] CAPI failed', { eventName: body.eventName, error: result.error });
+    console.error('[api/meta-capi/track] CAPI failed', {
+      eventName: body.eventName,
+      error: result.error,
+    });
     return NextResponse.json({ ok: false, error: 'capi_failed' }, { status: 502 });
   }
 

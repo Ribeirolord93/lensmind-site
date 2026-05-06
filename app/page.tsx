@@ -33,6 +33,8 @@ export default async function HomePage() {
     'USD';
 
   // JSON-LD Product schema (Google Shopping, rich results)
+  // shippingDestination apenas pra países onde Shopify tem shipping rate configurado.
+  // Lançamento: México apenas. Adicionar CO/CL aqui APÓS configurar shipping rates lá.
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -56,11 +58,6 @@ export default async function HomePage() {
         '@type': 'OfferShippingDetails',
         shippingDestination: [
           { '@type': 'DefinedRegion', addressCountry: 'MX' },
-          { '@type': 'DefinedRegion', addressCountry: 'CO' },
-          { '@type': 'DefinedRegion', addressCountry: 'CL' },
-          { '@type': 'DefinedRegion', addressCountry: 'PE' },
-          { '@type': 'DefinedRegion', addressCountry: 'AR' },
-          { '@type': 'DefinedRegion', addressCountry: 'BR' },
         ],
       },
     },

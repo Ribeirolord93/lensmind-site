@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { ShoppingBag, Loader2, ArrowRight, MessageCircle } from 'lucide-react';
 import { fireMetaEvent } from '@/lib/fbq-helpers';
 
+const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
+
 interface BuyButtonProps {
   variantId: string;
   available: boolean;
@@ -58,6 +61,7 @@ export default function BuyButton({
       const ids = contentId ? [contentId] : [variantId];
 
       // Fire AddToCart (browser pixel + CAPI server-side, shared event_id)
+      // fireMetaEvent respects consent automatically (optOut=true if no marketing consent)
       fireMetaEvent({
         eventName: 'AddToCart',
         customData: {
@@ -122,7 +126,7 @@ export default function BuyButton({
                 acceso anticipado.
               </p>
               <a
-                href="https://wa.me/5521967440808?text=Hola!%20Quiero%20reservar%20mi%20Lensmind%20con%20acceso%20anticipado"
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola! Quiero reservar mi Lensmind con acceso anticipado')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs tracking-wider uppercase text-ember hover:text-ember-400 transition-colors font-medium"

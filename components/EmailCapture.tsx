@@ -3,6 +3,9 @@
 import { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
+import { fireMetaEvent } from '@/lib/fbq-helpers';
+
+const LEAD_VALUE = 19.9; // 10% off $199 — estimated lead value
 
 export default function EmailCapture() {
   const [email, setEmail] = useState('');
@@ -33,13 +36,26 @@ export default function EmailCapture() {
       setMessage('¡Listo! Revisa tu correo para tu cupón de 10%.');
       setEmail('');
 
-      // Track event for analytics
+      // GA4 sign_up event (only if gtag loaded — Analytics.tsx loads conditionally)
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'sign_up', { method: 'email_capture' });
       }
-      if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead');
-      }
+
+      // Meta Lead event with proper dedup (browser pixel + CAPI server-side)
+      // Email is sent to CAPI for hashing — never to browser pixel.
+      // fireMetaEvent respects consent automatically (optOut=true if no marketing consent).
+      fireMetaEvent({
+        eventName: 'Lead',
+        customData: {
+          contentName: 'Lead - 10% off lançamento',
+          contentCategory: 'newsletter_signup',
+          value: LEAD_VALUE,
+          currency: 'USD',
+        },
+        userData: {
+          email,
+        },
+      });
     } catch (err) {
       setStatus('error');
       setMessage('Algo salió mal. Intenta de nuevo en un momento.');
