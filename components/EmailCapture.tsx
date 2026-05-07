@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
 import { fireMetaEvent } from '@/lib/fbq-helpers';
 
-const LEAD_VALUE = 19.9; // 10% off $199 — estimated lead value
+const LEAD_VALUE = 14.99; // 10% off $149.99 — estimated lead value
 
 export default function EmailCapture() {
   const [email, setEmail] = useState('');

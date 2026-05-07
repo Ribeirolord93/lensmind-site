@@ -42,6 +42,11 @@ const config: Config = {
           600: '#525252',
           700: '#404040',
         },
+        // v16: WhatsApp brand color — usado em CTAs de chat
+        whatsapp: {
+          DEFAULT: '#25D366',
+          dark: '#1ebe57',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],

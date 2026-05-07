@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
+import TrustGuarantee from '@/components/TrustGuarantee';
 import BenefitsGrid from '@/components/BenefitsGrid';
 import VideoShowcase from '@/components/VideoShowcase';
 import ProductShowcase from '@/components/ProductShowcase';
@@ -8,6 +9,7 @@ import ComparisonTable from '@/components/ComparisonTable';
 import LaunchSection from '@/components/LaunchSection';
 import StatsBar from '@/components/StatsBar';
 import EmailCapture from '@/components/EmailCapture';
+import WhatsAppCTABlock from '@/components/WhatsAppCTABlock';
 import FAQ from '@/components/FAQ';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
@@ -35,13 +37,16 @@ export default async function HomePage() {
   // JSON-LD Product schema (Google Shopping, rich results)
   // shippingDestination apenas pra países onde Shopify tem shipping rate configurado.
   // Lançamento: México apenas. Adicionar CO/CL aqui APÓS configurar shipping rates lá.
+  // v16: Reviews placeholder estrutural (4.9 / 11.293)
+  // ⚠️ ANTES DO LAUNCH: substituir aggregateRating por dados reais
+  // (beta tester reviews, ou remover aggregateRating se não houver reviews verificadas).
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'Lensmind™ Edition 01',
     alternateName: product.title,
     description:
-      'Gafas inteligentes con IA, cámara Sony 1080p, traductor en 40 idiomas y audio manos libres. Diseñadas para Latinoamérica.',
+      'Gafas inteligentes con IA, cámara 1080p, traductor en 40 idiomas y audio manos libres. Diseñadas para Latinoamérica.',
     brand: { '@type': 'Brand', name: 'Lensmind' },
     sku: variant?.id || 'lensmind-edition-01',
     image: [`${SITE_URL}/opengraph-image`],
@@ -104,11 +109,17 @@ export default async function HomePage() {
         {/* Lifestyle cinema video */}
         <VideoShowcase />
 
-        {/* Product showcase + buy box */}
+        {/* Product showcase + buy box (com ReviewsBar inline) */}
         <ProductShowcase product={product} />
+
+        {/* v16: WhatsApp CTA block — entre product e comparativa, momento de dúvida */}
+        <WhatsAppCTABlock />
 
         {/* Comparativa vs Ray-Ban Meta */}
         <ComparisonTable />
+
+        {/* v16: Trust Guarantee — 4 garantias agressivas, antes do FAQ */}
+        <TrustGuarantee />
 
         {/* Specs reales */}
         <StatsBar />

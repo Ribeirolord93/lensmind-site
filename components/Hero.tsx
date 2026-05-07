@@ -66,7 +66,7 @@ export default function Hero() {
                 href="#producto"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-bone text-ink font-medium rounded-sm hover:bg-bone/90 transition-colors group"
               >
-                <span>Comprar — $199 USD</span>
+                <span>Comprar — $149.99 USD</span>
                 <ArrowRight
                   size={16}
                   className="transition-transform group-hover:translate-x-0.5"

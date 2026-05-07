@@ -2,7 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, MessageCircle } from 'lucide-react';
+
+const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,6 +24,10 @@ export default function Header() {
     { href: '#comparativa', label: 'Comparativa' },
     { href: '#faq', label: 'FAQ' },
   ];
+
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    'Hola! Tengo dudas sobre Lensmind™ Edition 01.'
+  )}`;
 
   return (
     <>
@@ -54,14 +61,40 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Right CTA + mobile menu */}
-            <div className="flex items-center gap-4">
+            {/* Right CTA + WhatsApp + mobile menu */}
+            <div className="flex items-center gap-3">
+              {/* WhatsApp visible on desktop — trust signal */}
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-[12px] text-bone-200 hover:text-bone border border-ink-700 hover:border-ink-600 rounded-full transition-all duration-300 group"
+                aria-label="Contactar por WhatsApp"
+              >
+                <MessageCircle
+                  size={14}
+                  className="text-ember group-hover:scale-110 transition-transform"
+                />
+                <span className="font-medium">Asesor</span>
+              </a>
+
               <Link
                 href="#comprar"
                 className="hidden md:inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-bone text-ink text-[13px] font-medium rounded-full hover:bg-bone-300 transition-all duration-300"
               >
                 Comprar
               </Link>
+
+              {/* Mobile WhatsApp icon-only */}
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="md:hidden text-ember p-2"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle size={20} />
+              </a>
 
               <button
                 onClick={() => setMenuOpen(true)}
@@ -108,12 +141,25 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+
+            {/* WhatsApp dentro do menu mobile */}
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 inline-flex items-center justify-center gap-2 px-6 py-4 border border-ink-700 text-bone-200 font-medium rounded-full"
+            >
+              <MessageCircle size={18} className="text-ember" />
+              <span>Habla con un asesor</span>
+            </a>
+
             <Link
               href="#comprar"
               onClick={() => setMenuOpen(false)}
-              className="mt-8 inline-flex items-center justify-center gap-2 px-6 py-4 bg-bone text-ink font-medium rounded-full"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-bone text-ink font-medium rounded-full"
             >
-              Comprar — $199 USD
+              Comprar — $149.99 USD
             </Link>
           </nav>
         </div>

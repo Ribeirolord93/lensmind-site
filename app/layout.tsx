@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s | Lensmind',
   },
   description:
-    'Gafas con IA, cámara Sony 1080p, traductor en 40 idiomas y audio manos libres. Diseñadas para Latinoamérica. $199 USD.',
+    'Gafas con IA, cámara Sony 1080p, traductor en 40 idiomas y audio manos libres. Diseñadas para Latinoamérica. $149.99 USD.',
   keywords: [
     'gafas inteligentes',
     'gafas con IA',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: 'Lensmind',
     title: 'Lensmind™ — Gafas Inteligentes con IA',
     description:
-      'Cámara 1080p, IA por voz y traductor en 40 idiomas. $199 USD.',
+      'Cámara 1080p, IA por voz y traductor en 40 idiomas. $149.99 USD.',
   },
   twitter: {
     card: 'summary_large_image',

@@ -12,7 +12,7 @@
  *   <ProductPageTracker
  *     contentId={product.id}
  *     contentName="Lensmind Edition 01"
- *     value={199}
+ *     value={149.99}
  *     currency="USD"
  *   />
  */

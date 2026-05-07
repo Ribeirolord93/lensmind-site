@@ -44,7 +44,7 @@ export default function QuienesSomosPage() {
                 n: '02',
                 title: 'Precio honesto',
                 detail:
-                  'Mismo nivel técnico que las marcas de referencia internacional, sin la prima de marca premium. $199 USD vs $379 USD del competidor más cercano.',
+                  'Mismo nivel técnico que las marcas de referencia internacional, sin la prima de marca premium. $149.99 USD vs $379 USD del competidor más cercano.',
               },
               {
                 n: '03',
@@ -106,7 +106,7 @@ export default function QuienesSomosPage() {
               </p>
             </div>
             <Link href="/#comprar" className="btn-primary group flex-shrink-0">
-              Comprar — $199 USD
+              Comprar — $149.99 USD
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-1"

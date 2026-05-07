@@ -1,8 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Shield, Lock, Truck, RefreshCw } from 'lucide-react';
 import ProductGallery from './ProductGallery';
 import BuyButton from './BuyButton';
+import ReviewsBar from './ReviewsBar';
 import type { Product } from '@/types/shopify';
 
 interface ProductShowcaseProps {
@@ -62,20 +65,25 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-8"
+            className="space-y-7"
           >
-            {/* In stock indicator */}
-            {variant?.availableForSale && (
-              <div className="flex items-center gap-2.5">
-                <span className="relative flex w-2 h-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ember opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-ember" />
-                </span>
-                <span className="text-[11px] tracking-[0.18em] uppercase text-bone-300 font-medium">
-                  En stock · Envío en 24h
-                </span>
-              </div>
-            )}
+            {/* In stock + Reviews compact */}
+            <div className="space-y-3">
+              {variant?.availableForSale && (
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex w-2 h-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ember opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-ember" />
+                  </span>
+                  <span className="text-[11px] tracking-[0.18em] uppercase text-bone-300 font-medium">
+                    En stock · Envío en 24h
+                  </span>
+                </div>
+              )}
+
+              {/* Reviews — placeholder estrutural com fonte Trustpilot */}
+              <ReviewsBar compact />
+            </div>
 
             {/* Title — brand-controlled, ignores Shopify's keyword-stuffed title */}
             <div className="space-y-2">
@@ -91,13 +99,13 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
             <div className="py-6 border-y border-ink-700">
               <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-2">
                 <span className="text-5xl md:text-6xl text-bone font-semibold tracking-tighter leading-none">
-                  ${priceNum.toFixed(0)}
+                  ${priceNum.toFixed(2)}
                 </span>
                 <span className="text-base text-smoke-400">USD</span>
                 {compareAt && (
                   <>
                     <span className="text-base text-smoke-500 line-through decoration-1 ml-2">
-                      ${compareAtNum.toFixed(0)}
+                      ${compareAtNum.toFixed(2)}
                     </span>
                     {discount > 0 && (
                       <span className="text-[11px] tracking-[0.18em] uppercase bg-ember/15 text-ember px-2.5 py-1 rounded-md font-semibold">
@@ -110,7 +118,12 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
 
               {savings > 0 && (
                 <p className="mt-2 text-sm text-bone-300">
-                  Ahorras ${savings.toFixed(0)} USD vs precio regular
+                  Ahorras ${savings.toFixed(2)} USD vs precio regular
+                </p>
+              )}
+              {!savings && (
+                <p className="mt-2 text-sm text-bone-300">
+                  Precio de lanzamiento — sube cuando se agote esta serie
                 </p>
               )}
             </div>
@@ -130,41 +143,85 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
               ))}
             </ul>
 
-            {/* Buy button */}
-            <div className="pt-4">
+            {/* Buy button — sem link WhatsApp redundante (já tem WhatsAppCTABlock logo abaixo) */}
+            <div className="pt-2">
               <BuyButton
                 variantId={variant?.id || ''}
                 available={variant?.availableForSale ?? false}
+                value={priceNum}
               />
-
-              {/* WhatsApp discreto — não FAB, só link textual */}
-              <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808'}?text=${encodeURIComponent('Hola! Tengo dudas sobre Lensmind™ Edition 01.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 text-sm text-smoke-400 hover:text-bone transition-colors group"
-              >
-                <span>¿Dudas? Chat por WhatsApp</span>
-                <span className="transition-transform group-hover:translate-x-0.5">→</span>
-              </a>
             </div>
 
-            {/* Trust badges visuais */}
-            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-ink-800">
-              <div className="flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-smoke-500">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                Pago seguro SSL
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">VISA</span>
-                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">MC</span>
-                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">AMEX</span>
-                <span className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded">MP</span>
-              </div>
+            {/* Trust badges expandidos — quatro garantias-clave */}
+            <div className="grid grid-cols-2 gap-3 pt-5 border-t border-ink-800">
+              {[
+                {
+                  icon: RefreshCw,
+                  label: '30 días',
+                  sub: 'Devolución total',
+                },
+                {
+                  icon: Truck,
+                  label: 'Envío',
+                  sub: 'Reverso pagado',
+                },
+                {
+                  icon: Shield,
+                  label: '1 año',
+                  sub: 'Garantía fábrica',
+                },
+                {
+                  icon: Lock,
+                  label: 'SSL',
+                  sub: 'Pago protegido',
+                },
+              ].map((b) => {
+                const Icon = b.icon;
+                return (
+                  <div
+                    key={b.label}
+                    className="flex items-center gap-3 px-3 py-2.5 bg-ink-900 border border-ink-700 rounded-xl"
+                  >
+                    <Icon
+                      size={18}
+                      className="text-ember flex-shrink-0"
+                      strokeWidth={1.75}
+                    />
+                    <div className="leading-tight">
+                      <p className="text-bone text-xs font-semibold">
+                        {b.label}
+                      </p>
+                      <p className="text-smoke-400 text-[11px]">{b.sub}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Pago aceitos */}
+            <div className="flex flex-wrap items-center gap-2 pt-4">
+              <span className="text-[10px] tracking-[0.15em] uppercase text-smoke-500 mr-2">
+                Pagos:
+              </span>
+              {['VISA', 'MC', 'AMEX', 'MP', 'PIX'].map((m) => (
+                <span
+                  key={m}
+                  className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded"
+                >
+                  {m}
+                </span>
+              ))}
+            </div>
+
+            {/* Privacy link — pivot competitivo */}
+            <Link
+              href="/privacidad-datos"
+              className="inline-flex items-center gap-2 text-xs text-smoke-400 hover:text-ember transition-colors group pt-2"
+            >
+              <Shield size={13} strokeWidth={1.75} />
+              <span>Conoce cómo protegemos tu privacidad</span>
+              <span className="transition-transform group-hover:translate-x-0.5">→</span>
+            </Link>
 
             {/* Delivery info */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-4 pt-6 border-t border-ink-700">
@@ -172,33 +229,25 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
                   Entrega
                 </p>
-                <p className="text-sm text-bone-200">
-                  10-17 días LATAM
-                </p>
+                <p className="text-sm text-bone-200">10-17 días LATAM</p>
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
-                  Garantía
+                  Aranceles
                 </p>
-                <p className="text-sm text-bone-200">
-                  30 días · 1 año fábrica
-                </p>
+                <p className="text-sm text-bone-200">Pueden aplicar</p>
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
-                  Envío
+                  Tracking
                 </p>
-                <p className="text-sm text-bone-200">
-                  Internacional · tracking activo
-                </p>
+                <p className="text-sm text-bone-200">Activo desde día 3</p>
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
-                  Pago
+                  Soporte
                 </p>
-                <p className="text-sm text-bone-200">
-                  Visa · MC · MP · cuotas
-                </p>
+                <p className="text-sm text-bone-200">Español · Portugués</p>
               </div>
             </div>
           </motion.div>

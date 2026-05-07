@@ -9,7 +9,7 @@ const benefits = [
     n: '01',
     title: 'Precio de lanzamiento',
     detail:
-      '$199 USD durante el lanzamiento — el precio sube a $279 USD una vez agotada esta serie.',
+      '$149.99 USD durante el lanzamiento — el precio sube a $199 USD una vez agotada esta serie.',
   },
   {
     n: '02',
@@ -102,7 +102,7 @@ export default function LaunchSection() {
             </p>
           </div>
           <Link href="#comprar" className="btn-primary group flex-shrink-0">
-            Comprar — $199 USD
+            Comprar — $149.99 USD
             <ArrowRight
               size={16}
               className="transition-transform group-hover:translate-x-1"

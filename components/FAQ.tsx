@@ -4,22 +4,49 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 
+// Ordem otimizada: perguntas mais buscadas primeiro, defesa de preço mais embaixo.
+// Removida pergunta sobre "gafas chinas $80" — não citar concorrente low-cost (cria curiosidade).
 const faqs = [
+  // === Logística (mais perguntada) ===
   {
     id: 'faq-envios',
     q: '¿Cuándo recibo mi pedido?',
-    a: 'Entre 10 y 17 días hábiles desde la confirmación del pago. Envío internacional desde nuestro centro de distribución global hacia México, Colombia, Chile, Perú, Argentina y Brasil. El plazo incluye despacho aduanero. Recibirás tracking activo desde el día 3. Posibles aranceles de importación corren por cuenta del cliente según legislación local.',
+    a: 'Entre 10 y 17 días hábiles desde la confirmación del pago. Envío internacional desde nuestro centro de distribución global hacia México, Colombia, Chile, Perú, Argentina y Brasil. El plazo incluye despacho aduanero. Recibirás tracking activo desde el día 3.',
   },
+  {
+    id: 'faq-aranceles',
+    q: '¿Tengo que pagar impuestos en aduana?',
+    a: 'Pueden aplicar aranceles de importación según legislación local de cada país. En la mayoría de los envíos a México con valor declarado bajo USD 50 no aplican cargos. Para envíos sobre ese umbral pueden generarse impuestos al recibir el paquete. Te recomendamos consultar la legislación vigente de tu país antes de comprar.',
+  },
+  // === Comparativa (segunda mais relevante) ===
+  {
+    id: 'faq-vs-rayban',
+    q: '¿En qué se diferencian de Ray-Ban Meta?',
+    a: 'Lensmind™ comparte el nivel técnico (cámara HD, IA por voz, audio open-ear, Bluetooth 5.3) con ventajas claras: traductor con 40 idiomas (12 offline), disponibilidad oficial en LATAM con soporte en español/portugués, pago en moneda local con cuotas, y garantía con reposición regional. Ray-Ban Meta no tiene presencia oficial en México, Colombia ni Chile al cierre de esta página.',
+  },
+  // === Garantía e devolução ===
   {
     id: 'faq-garantia',
     q: '¿Cuál es la garantía?',
-    a: '30 días de devolución sin preguntas + 1 año de garantía de fábrica contra defectos de fabricación. Soporte técnico oficial en español y portugués.',
+    a: '30 días de devolución sin preguntas + 1 año de garantía de fábrica contra defectos de fabricación. Si dentro de los 30 días no estás satisfecho por cualquier motivo, te devolvemos el 100% del dinero y pagamos el envío de regreso. Soporte técnico oficial en español y portugués.',
   },
   {
     id: 'faq-devoluciones',
     q: '¿Cómo funcionan las devoluciones?',
-    a: 'Si no estás satisfecho, escríbenos dentro de los primeros 30 días desde la recepción y coordinamos la devolución. El producto debe estar en su estado original con todos los accesorios. Reembolso en 5-10 días hábiles después de recibir el producto de vuelta.',
+    a: 'Si no estás satisfecho, escríbenos dentro de los primeros 30 días desde la recepción y coordinamos la devolución con guía prepagada (tú no pagas el envío de regreso). El producto debe estar en su estado original con todos los accesorios. Reembolso en 5-10 días hábiles después de recibir el producto de vuelta en nuestro centro.',
   },
+  // === Privacidad — pivot competitivo ===
+  {
+    id: 'faq-privacidad',
+    q: '¿Qué pasa con la privacidad de mis videos?',
+    a: 'Tus videos quedan en las gafas hasta que TÚ decides transferirlos. No hay carga automática a la nube, no se usan para entrenar inteligencia artificial, y no son revisados por personas. El LED frontal se enciende cada vez que la cámara graba — transparencia total para ti y para quienes te rodean. Cumplimos con la Ley Federal de Protección de Datos Personales de México.',
+  },
+  {
+    id: 'faq-ia-entrena',
+    q: '¿Mis grabaciones entrenan alguna IA?',
+    a: 'No. Lensmind™ no usa el contenido grabado por usuarios para entrenar modelos de inteligencia artificial, ni los comparte con terceros para ese fin. Los modelos de IA del traductor y asistente de voz fueron entrenados antes del lanzamiento con datasets independientes.',
+  },
+  // === Características técnicas ===
   {
     id: 'faq-app',
     q: '¿Necesito instalar una app?',
@@ -28,27 +55,33 @@ const faqs = [
   {
     id: 'faq-celular',
     q: '¿Funcionan sin celular?',
-    a: 'La cámara, audio y traductor offline (12 idiomas) funcionan de forma autónoma. Para funciones de IA avanzada y sincronización en la nube se requiere conexión Bluetooth con tu celular.',
+    a: 'La cámara, el audio y el traductor offline (12 idiomas) funcionan de forma autónoma sin necesidad de celular. Para funciones de IA avanzada, traductor de 40 idiomas en línea y sincronización en la nube se requiere conexión Bluetooth con tu celular.',
   },
   {
     id: 'faq-bateria',
     q: '¿Cuánto dura la batería?',
-    a: '12 horas de uso normal · 6 horas de grabación continua · 200 horas en modo standby. El estuche de carga incluido proporciona 3 cargas adicionales completas.',
+    a: 'Hasta 4 horas de grabación continua de video, hasta 6 horas de uso mixto (audio + traductor + cámara puntual), y hasta 200 horas en modo standby. El estuche de carga incluido proporciona 3 cargas adicionales completas — más de un día completo de uso intensivo lejos del enchufe.',
   },
   {
     id: 'faq-agua',
     q: '¿Son resistentes al agua?',
-    a: 'Certificación IPX4 — resisten salpicaduras, sudor y lluvia ligera. No son aptas para sumergir ni para uso en piscina o ducha.',
-  },
-  {
-    id: 'faq-pago',
-    q: '¿Qué métodos de pago aceptan?',
-    a: 'Visa, Mastercard, American Express, MercadoPago y PIX (Brasil). Pago en cuotas disponible según país y banco emisor.',
+    a: 'Certificación IPX4 — resisten salpicaduras, sudor y lluvia ligera. No son aptas para sumergir ni para uso en piscina, ducha o actividades acuáticas.',
   },
   {
     id: 'faq-graduacion',
     q: '¿Tienen graduación o lentes intercambiables?',
-    a: 'Sí. Compatibles con lentes graduados estándar (esférico hasta -6 / +4). Servicio de instalación en óptica de confianza. Las micas claras son intercambiables por las del color que prefieras.',
+    a: 'Sí. Compatibles con lentes graduados estándar (esférico hasta -6 / +4). Servicio de instalación en óptica de confianza. Las micas claras son intercambiables por las del color que prefieras (gris, ámbar, espejo).',
+  },
+  // === Pago ===
+  {
+    id: 'faq-pago',
+    q: '¿Qué métodos de pago aceptan?',
+    a: 'Visa, Mastercard, American Express, MercadoPago y PIX (Brasil). Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
+  },
+  {
+    id: 'faq-soporte',
+    q: '¿Cómo es el soporte después de la compra?',
+    a: 'Soporte oficial en español y portugués vía WhatsApp y email. Tiempo de respuesta promedio: menos de 5 minutos en horario laboral, 24h fuera de horario. Acompañamiento desde la entrega hasta cualquier duda técnica durante el primer año de uso.',
   },
 ];
 

@@ -35,7 +35,7 @@ export default function FinalCTA() {
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <Link href="#comprar" className="btn-primary group text-base px-9 py-4">
-              Comprar — $199 USD
+              Comprar — $149.99 USD
               <ArrowRight
                 size={18}
                 className="transition-transform group-hover:translate-x-1"
