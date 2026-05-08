@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 32" width="75" height="32">
+  <!-- Border -->
+  <rect x="0.5" y="0.5" width="74" height="31" rx="4" fill="#fff" stroke="#000" stroke-opacity="0.15"/>
+  <!-- G logo, 4 colors, ~scale to fit y=8-24 -->
+  <g transform="translate(7, 8) scale(0.667)">
+    <!-- Blue arc (right) -->
+    <path fill="#4285F4" d="M23.49 12.275c0-.852-.077-1.67-.22-2.456H12v4.643h6.439c-.275 1.498-1.123 2.766-2.39 3.617v3.018h3.881c2.27-2.094 3.56-5.18 3.56-8.822z"/>
+    <!-- Green arc (bottom) -->
+    <path fill="#34A853" d="M12 24c3.24 0 5.957-1.077 7.94-2.91l-3.88-3.018c-1.078.726-2.456 1.156-4.06 1.156-3.124 0-5.769-2.105-6.715-4.946H1.27v3.103C3.243 21.31 7.305 24 12 24z"/>
+    <!-- Yellow arc (left) -->
+    <path fill="#FBBC05" d="M5.285 14.282c-.235-.726-.37-1.5-.37-2.282s.135-1.556.37-2.282V6.615H1.27a12 12 0 000 10.77l4.015-3.103z"/>
+    <!-- Red arc (top) -->
+    <path fill="#EA4335" d="M12 4.772c1.766 0 3.345.609 4.586 1.792l3.434-3.434C17.953 1.19 15.235 0 12 0 7.305 0 3.243 2.69 1.27 6.615l4.015 3.103C6.231 6.877 8.876 4.772 12 4.772z"/>
+  </g>
+  <!-- "Pay" text -->
+  <text x="33" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="500" fill="#5F6368" letter-spacing="-0.3">Pay</text>
+</svg>
