@@ -24,6 +24,8 @@ const SITE_URL =
 export const revalidate = 3600;
 
 // Static paths pra todos os posts (gera SSG)
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((p) => ({ slug: p.slug }));
