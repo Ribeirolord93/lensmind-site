@@ -3,7 +3,7 @@ import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
 import TrustGuarantee from '@/components/TrustGuarantee';
 import BenefitsGrid from '@/components/BenefitsGrid';
-import VideoShowcase from '@/components/VideoShowcase';
+import FeatureSpotlight from '@/components/FeatureSpotlight';
 import ProductShowcase from '@/components/ProductShowcase';
 import ComparisonTable from '@/components/ComparisonTable';
 import LaunchSection from '@/components/LaunchSection';
@@ -106,8 +106,16 @@ export default async function HomePage() {
         {/* Tech features — 4 alternating Meta-style blocks */}
         <BenefitsGrid />
 
-        {/* Lifestyle cinema video */}
-        <VideoShowcase />
+        {/* v18: Audio Spotlight — substitui VideoShowcase, narrativa sensorial pré-buy */}
+        <FeatureSpotlight
+          eyebrow="Audio espacial"
+          headline="Escucha sin oídos tapados."
+          subhead="Cuatro micrófonos direccionales. Altavoces ocultos en las patillas. Música, llamadas, traducciones — solo tú las escuchas. Tus oídos siguen libres para el mundo que te rodea."
+          microCopy="Sin Bluetooth de auriculares. Sin cables. Sin esfuerzo."
+          image="/products/lensmind-audio-spatial.jpg"
+          imageAlt="Detalle del lateral de las gafas Lensmind con ondas de audio espacial visibles, mostrando los altavoces direccionales integrados en las patillas"
+          imagePosition="left"
+        />
 
         {/* Product showcase + buy box (com ReviewsBar inline) */}
         <ProductShowcase product={product} />
@@ -117,6 +125,17 @@ export default async function HomePage() {
 
         {/* Comparativa vs Ray-Ban Meta */}
         <ComparisonTable />
+
+        {/* v18: Camera + LED Spotlight — quebra objeção de privacidade depois da comparação racional */}
+        <FeatureSpotlight
+          eyebrow="Cámara 1080p · LED de privacidad"
+          headline="Captura el momento. Respeta a quien está en él."
+          subhead="Cada vez que grabas, un LED rojo se enciende automáticamente. Visible para todos. Sin opción de desactivar."
+          microCopy="Porque tu privacidad no es negociable — la de los demás tampoco."
+          image="/products/lensmind-camera-privacy.jpg"
+          imageAlt="Primer plano de la cámara 1080p integrada en las gafas Lensmind con el LED rojo de grabación encendido, demostrando la transparencia visual hacia las personas alrededor"
+          imagePosition="right"
+        />
 
         {/* v16: Trust Guarantee — 4 garantias agressivas, antes do FAQ */}
         <TrustGuarantee />
