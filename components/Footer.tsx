@@ -33,6 +33,7 @@ const cols = [
     title: 'Empresa',
     links: [
       { label: 'Quiénes somos', href: '/quienes-somos' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Cómo protegemos tu privacidad', href: '/privacidad-datos' },
       { label: 'Términos', href: '/terminos' },
       { label: 'Política de privacidad', href: '/privacidad' },

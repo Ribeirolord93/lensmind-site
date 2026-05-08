@@ -1,16 +1,17 @@
 import type { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './content/**/*.{md,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        // Meta/Oakley-inspired tech palette — minimal, high contrast
         ink: {
-          DEFAULT: '#000000', // pure black like Meta
+          DEFAULT: '#000000',
           950: '#050505',
           900: '#0A0A0A',
           800: '#141414',
@@ -19,7 +20,7 @@ const config: Config = {
           500: '#383838',
         },
         bone: {
-          DEFAULT: '#FAFAFA', // off-white like Apple/Meta
+          DEFAULT: '#FAFAFA',
           50: '#FFFFFF',
           100: '#FAFAFA',
           200: '#F5F5F5',
@@ -42,7 +43,6 @@ const config: Config = {
           600: '#525252',
           700: '#404040',
         },
-        // v16: WhatsApp brand color — usado em CTAs de chat
         whatsapp: {
           DEFAULT: '#25D366',
           dark: '#1ebe57',
@@ -61,11 +61,22 @@ const config: Config = {
         widest: '0.18em',
       },
       fontSize: {
-        // Meta-style massive display sizes
-        'display-xl': ['clamp(3rem, 12vw, 9rem)', { lineHeight: '0.92', letterSpacing: '-0.045em' }],
-        'display-lg': ['clamp(2.5rem, 9vw, 7rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
-        'display-md': ['clamp(2rem, 6vw, 4.5rem)', { lineHeight: '1', letterSpacing: '-0.03em' }],
-        'display-sm': ['clamp(1.5rem, 4vw, 3rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        'display-xl': [
+          'clamp(3rem, 12vw, 9rem)',
+          { lineHeight: '0.92', letterSpacing: '-0.045em' },
+        ],
+        'display-lg': [
+          'clamp(2.5rem, 9vw, 7rem)',
+          { lineHeight: '0.95', letterSpacing: '-0.04em' },
+        ],
+        'display-md': [
+          'clamp(2rem, 6vw, 4.5rem)',
+          { lineHeight: '1', letterSpacing: '-0.03em' },
+        ],
+        'display-sm': [
+          'clamp(1.5rem, 4vw, 3rem)',
+          { lineHeight: '1.05', letterSpacing: '-0.02em' },
+        ],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
@@ -86,9 +97,82 @@ const config: Config = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
+      typography: ({ theme }: { theme: (key: string) => string }) => ({
+        // Tema customizado pro blog Lensmind — prose-lensmind
+        lensmind: {
+          css: {
+            '--tw-prose-body': theme('colors.bone.300'),
+            '--tw-prose-headings': theme('colors.bone.DEFAULT'),
+            '--tw-prose-lead': theme('colors.bone.200'),
+            '--tw-prose-links': theme('colors.ember.DEFAULT'),
+            '--tw-prose-bold': theme('colors.bone.DEFAULT'),
+            '--tw-prose-counters': theme('colors.smoke.400'),
+            '--tw-prose-bullets': theme('colors.ember.DEFAULT'),
+            '--tw-prose-hr': theme('colors.ink.700'),
+            '--tw-prose-quotes': theme('colors.bone.200'),
+            '--tw-prose-quote-borders': theme('colors.ember.DEFAULT'),
+            '--tw-prose-captions': theme('colors.smoke.500'),
+            '--tw-prose-code': theme('colors.bone.DEFAULT'),
+            '--tw-prose-pre-code': theme('colors.bone.200'),
+            '--tw-prose-pre-bg': theme('colors.ink.900'),
+            '--tw-prose-th-borders': theme('colors.ink.700'),
+            '--tw-prose-td-borders': theme('colors.ink.800'),
+
+            // Headings — display style do site
+            'h2, h3, h4': {
+              fontWeight: '700',
+              letterSpacing: '-0.02em',
+              scrollMarginTop: '6rem',
+            },
+            h2: {
+              fontSize: '1.875rem',
+              marginTop: '2.5em',
+              marginBottom: '0.8em',
+              lineHeight: '1.15',
+            },
+            h3: {
+              fontSize: '1.375rem',
+              marginTop: '2em',
+              marginBottom: '0.6em',
+              lineHeight: '1.25',
+            },
+            // Links sem underline default — fica leve
+            a: {
+              fontWeight: '500',
+              textDecoration: 'underline',
+              textDecorationThickness: '1px',
+              textUnderlineOffset: '3px',
+              transition: 'color 0.2s',
+              '&:hover': {
+                color: theme('colors.ember.400'),
+              },
+            },
+            // Blockquote elegante
+            blockquote: {
+              borderLeftWidth: '3px',
+              fontStyle: 'normal',
+              fontWeight: '400',
+              quotes: 'none',
+              padding: '0.5em 1.5em',
+              marginLeft: '0',
+              marginRight: '0',
+            },
+            'blockquote p:first-of-type::before': { content: 'none' },
+            'blockquote p:last-of-type::after': { content: 'none' },
+            // Anchor headings (rehype-autolink)
+            'a.anchor-heading': {
+              textDecoration: 'none',
+              color: 'inherit',
+              '&:hover': {
+                color: theme('colors.ember.DEFAULT'),
+              },
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;

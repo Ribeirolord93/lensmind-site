@@ -19,10 +19,11 @@ export default function Header() {
   }, []);
 
   const links = [
-    { href: '#producto', label: 'Producto' },
-    { href: '#tecnologia', label: 'Tecnología' },
-    { href: '#comparativa', label: 'Comparativa' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '/#producto', label: 'Producto' },
+    { href: '/#tecnologia', label: 'Tecnología' },
+    { href: '/#comparativa', label: 'Comparativa' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/#faq', label: 'FAQ' },
   ];
 
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
