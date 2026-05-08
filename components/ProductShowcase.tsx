@@ -68,16 +68,16 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-7"
           >
-            {/* In stock + Reviews compact */}
+            {/* In stock + Despacho/Entrega — texto honesto sobre prazos */}
             <div className="space-y-3">
               {variant?.availableForSale && (
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap">
                   <span className="relative flex w-2 h-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ember opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-ember" />
                   </span>
                   <span className="text-[11px] tracking-[0.18em] uppercase text-bone-300 font-medium">
-                    En stock · Envío en 24h
+                    En stock · Despacho 24h · Entrega 10-17 días
                   </span>
                 </div>
               )}
@@ -163,8 +163,8 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
                 },
                 {
                   icon: Truck,
-                  label: 'Envío',
-                  sub: 'Reverso pagado',
+                  label: 'Despacho',
+                  sub: 'En 24 horas',
                 },
                 {
                   icon: Shield,
@@ -214,19 +214,19 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
               <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </Link>
 
-            {/* Delivery info */}
+            {/* Delivery info — atualizado para refletir corretamente prazos MX+CO */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-4 pt-6 border-t border-ink-700">
+              <div>
+                <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
+                  Despacho
+                </p>
+                <p className="text-sm text-bone-200">En 24 horas</p>
+              </div>
               <div>
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
                   Entrega
                 </p>
-                <p className="text-sm text-bone-200">10-17 días LATAM</p>
-              </div>
-              <div>
-                <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">
-                  Aranceles
-                </p>
-                <p className="text-sm text-bone-200">Pueden aplicar</p>
+                <p className="text-sm text-bone-200">10-17 días MX/CO</p>
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.18em] uppercase text-smoke-500 mb-1.5">

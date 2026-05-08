@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Privacidad y Datos — Tus videos, tu control',
   description:
-    'Lensmind™ pone la privacidad primero. LED visible, sin entrenamiento de IA con tus datos, sin cargas automáticas. Cumple con la Ley Federal de Protección de Datos.',
+    'Lensmind™ pone la privacidad primero. LED visible, sin entrenamiento de IA con tus datos, sin cargas automáticas. Cumplimos con LFPDPPP México y Ley 1581 de Habeas Data Colombia.',
   alternates: { canonical: '/privacidad-datos' },
 };
 
@@ -35,8 +35,8 @@ const principles = [
   },
   {
     icon: Shield,
-    title: 'Cumple con la LFPDPPP de México',
-    desc: 'Ley Federal de Protección de Datos Personales en Posesión de Particulares. Tus datos personales se tratan según la legislación mexicana.',
+    title: 'Cumplimiento legal MX y CO',
+    desc: 'LFPDPPP de México y Ley 1581 de Habeas Data de Colombia. Tus datos personales se tratan según la legislación de tu país de residencia.',
   },
   {
     icon: Bell,
@@ -191,8 +191,17 @@ export default function PrivacidadDatosPage() {
                       Reportada en prensa
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="border-b border-ink-800">
                     <td className="py-4 pr-6">Compatibilidad LFPDPPP México</td>
+                    <td className="text-center py-4 px-4 text-ember font-semibold">
+                      Sí
+                    </td>
+                    <td className="text-center py-4 pl-4 text-smoke-400">
+                      Marco internacional
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 pr-6">Compatibilidad Ley 1581 Colombia</td>
                     <td className="text-center py-4 px-4 text-ember font-semibold">
                       Sí
                     </td>
@@ -212,20 +221,37 @@ export default function PrivacidadDatosPage() {
             </p>
           </div>
 
-          {/* Tus derechos */}
-          <div className="max-w-3xl mb-16">
-            <p className="eyebrow mb-5">Tus derechos</p>
+          {/* === Tus derechos: México (ARCO) === */}
+          <div className="max-w-3xl mb-12 md:mb-16">
+            <p className="eyebrow mb-5">Tus derechos · México</p>
             <h2 className="display-heading text-2xl md:text-3xl lg:text-4xl text-bone tracking-tight mb-6 text-balance">
-              Acceso, rectificación, cancelación, oposición.
+              Acceso, Rectificación, Cancelación, Oposición.
             </h2>
             <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-4">
-              Como usuario en México, tienes derechos ARCO sobre tus datos
-              personales. Puedes solicitar acceso a la información que tenemos
-              sobre ti, pedir rectificación de datos incorrectos, cancelar el
-              tratamiento o oponerte al uso para finalidades específicas.
+              Como usuario en México, bajo la Ley Federal de Protección de Datos
+              Personales en Posesión de Particulares (LFPDPPP), tienes los
+              derechos ARCO sobre tus datos personales. Puedes solicitar:
             </p>
-            <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-6">
-              Para ejercer cualquiera de estos derechos, escríbenos a{' '}
+            <ul className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-6 space-y-2 list-disc list-inside marker:text-ember">
+              <li>
+                <strong className="text-bone">Acceso</strong> a la información
+                personal que tenemos sobre ti.
+              </li>
+              <li>
+                <strong className="text-bone">Rectificación</strong> de datos
+                incorrectos, inexactos o incompletos.
+              </li>
+              <li>
+                <strong className="text-bone">Cancelación</strong> del
+                tratamiento de tus datos cuando sea procedente.
+              </li>
+              <li>
+                <strong className="text-bone">Oposición</strong> al uso de tus
+                datos para finalidades específicas (como marketing).
+              </li>
+            </ul>
+            <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-4">
+              Para ejercer cualquier derecho ARCO, escríbenos a{' '}
               <a
                 href="mailto:hola@lensmind.lat"
                 className="text-ember hover:text-ember-400 underline underline-offset-2"
@@ -235,10 +261,78 @@ export default function PrivacidadDatosPage() {
               con asunto &ldquo;Derechos ARCO&rdquo; y responderemos en un plazo
               máximo de 20 días hábiles.
             </p>
+            <p className="text-smoke-500 text-xs leading-relaxed">
+              Autoridad de protección de datos en México: Instituto Nacional de
+              Transparencia, Acceso a la Información y Protección de Datos
+              Personales (INAI) · www.inai.org.mx
+            </p>
+          </div>
+
+          {/* === Tus derechos: Colombia (Habeas Data — Ley 1581) === */}
+          <div className="max-w-3xl mb-16">
+            <p className="eyebrow mb-5">Tus derechos · Colombia</p>
+            <h2 className="display-heading text-2xl md:text-3xl lg:text-4xl text-bone tracking-tight mb-6 text-balance">
+              Habeas Data — Ley 1581 de 2012.
+            </h2>
+            <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-4">
+              Como titular de datos personales en Colombia, bajo la Ley 1581 de
+              2012 (Régimen General de Protección de Datos Personales) y el
+              Decreto 1377 de 2013, tienes los siguientes derechos:
+            </p>
+            <ul className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-6 space-y-2 list-disc list-inside marker:text-ember">
+              <li>
+                <strong className="text-bone">Conocer, actualizar y rectificar</strong>{' '}
+                tus datos personales en cualquier momento.
+              </li>
+              <li>
+                <strong className="text-bone">Solicitar prueba de la autorización</strong>{' '}
+                otorgada para el tratamiento de tus datos.
+              </li>
+              <li>
+                <strong className="text-bone">Ser informado</strong> sobre el
+                uso que se ha dado a tus datos personales.
+              </li>
+              <li>
+                <strong className="text-bone">Presentar quejas ante la SIC</strong>{' '}
+                (Superintendencia de Industria y Comercio) por infracciones a la
+                ley.
+              </li>
+              <li>
+                <strong className="text-bone">Revocar la autorización</strong>{' '}
+                y/o solicitar la supresión del dato cuando no se respeten los
+                principios, derechos y garantías constitucionales y legales.
+              </li>
+              <li>
+                <strong className="text-bone">Acceder gratuitamente</strong> a
+                tus datos personales que hayan sido objeto de tratamiento.
+              </li>
+            </ul>
+            <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-4">
+              Para ejercer cualquier derecho bajo la Ley 1581, escríbenos a{' '}
+              <a
+                href="mailto:hola@lensmind.lat"
+                className="text-ember hover:text-ember-400 underline underline-offset-2"
+              >
+                hola@lensmind.lat
+              </a>{' '}
+              con asunto &ldquo;Habeas Data Colombia&rdquo; y responderemos en
+              un plazo máximo de 15 días hábiles, según lo establece la ley.
+            </p>
+            <p className="text-bone-300 text-[15px] md:text-base leading-relaxed mb-4">
+              <strong className="text-bone">Finalidad del tratamiento:</strong>{' '}
+              tus datos en Colombia son tratados exclusivamente para procesar tu
+              compra, despacho, soporte post-venta, garantía y comunicaciones
+              transaccionales. Marketing solo con consentimiento explícito.
+            </p>
+            <p className="text-smoke-500 text-xs leading-relaxed">
+              Autoridad de protección de datos en Colombia: Superintendencia de
+              Industria y Comercio (SIC) — Delegatura para la Protección de
+              Datos Personales · www.sic.gov.co
+            </p>
 
             <Link
               href="/privacidad"
-              className="inline-flex items-center gap-2 text-sm text-bone hover:text-ember transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-bone hover:text-ember transition-colors mt-8"
             >
               <span>Leer la política de privacidad completa</span>
               <span aria-hidden>→</span>

@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Menu, X, MessageCircle } from 'lucide-react';
 
+// Default WhatsApp number — usado quando user não escolheu país.
+// Idealmente env var `NEXT_PUBLIC_WHATSAPP_NUMBER` aponta pro número MX (mercado primário).
+// Quando user já navegou pra contexto CO específico, podemos ajustar via geo-detection no futuro.
 const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
 
@@ -18,6 +21,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Todos os anchors normalizados como `/#xxx` pra funcionar de qualquer página
+  // (blog, /privacidad, etc.) e não apenas da home.
   const links = [
     { href: '/#producto', label: 'Producto' },
     { href: '/#tecnologia', label: 'Tecnología' },
@@ -79,8 +84,9 @@ export default function Header() {
                 <span className="font-medium">Asesor</span>
               </a>
 
+              {/* Botão Comprar — leva pro produto inteiro (gallery + buy box visíveis) */}
               <Link
-                href="#comprar"
+                href="/#producto"
                 className="hidden md:inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-bone text-ink text-[13px] font-medium rounded-full hover:bg-bone-300 transition-all duration-300"
               >
                 Comprar
@@ -156,7 +162,7 @@ export default function Header() {
             </a>
 
             <Link
-              href="#comprar"
+              href="/#producto"
               onClick={() => setMenuOpen(false)}
               className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-bone text-ink font-medium rounded-full"
             >

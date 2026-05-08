@@ -4,53 +4,72 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 
-// Ordem otimizada: perguntas mais buscadas primeiro, defesa de preço mais embaixo.
-// Removida pergunta sobre "gafas chinas $80" — não citar concorrente low-cost (cria curiosidade).
+// FAQ otimizado para SEO MX + CO (mercados de lançamento Fase 1).
+// Removidas referências a Brasil/Chile/Perú/Argentina enquanto não há shipping ativo.
+// Perguntas Colombia adicionadas com keywords de cauda longa pra ranquear:
+//   - "envíos a colombia gafas inteligentes"
+//   - "PSE pago gafas con IA"
+//   - "DIAN aranceles smart glasses"
 const faqs = [
   // === Logística (mais perguntada) ===
   {
     id: 'faq-envios',
     q: '¿Cuándo recibo mi pedido?',
-    a: 'Entre 10 y 17 días hábiles desde la confirmación del pago. Envío internacional desde nuestro centro de distribución global hacia México, Colombia, Chile, Perú, Argentina y Brasil. El plazo incluye despacho aduanero. Recibirás tracking activo desde el día 3.',
+    a: 'Entre 10 y 17 días hábiles desde la confirmación del pago. Despachamos en 24h desde el centro de distribución global hacia México y Colombia. El plazo incluye despacho aduanero. Recibirás tracking activo desde el día 3 con actualizaciones diarias hasta la entrega en tu domicilio.',
+  },
+  {
+    id: 'faq-envios-co',
+    q: '¿Hacen envíos a Colombia? ¿Cuánto tarda?',
+    a: 'Sí, enviamos a toda Colombia: Bogotá, Medellín, Cali, Barranquilla, Cartagena y demás ciudades. El plazo es de 10 a 17 días hábiles desde la confirmación del pago, igual que en México. Despacho en 24 horas desde el centro logístico, con código de seguimiento activo desde el día 3. Las entregas en zonas rurales pueden sumar 2-4 días adicionales.',
   },
   {
     id: 'faq-aranceles',
-    q: '¿Tengo que pagar impuestos en aduana?',
-    a: 'Pueden aplicar aranceles de importación según legislación local de cada país. En la mayoría de los envíos a México con valor declarado bajo USD 50 no aplican cargos. Para envíos sobre ese umbral pueden generarse impuestos al recibir el paquete. Te recomendamos consultar la legislación vigente de tu país antes de comprar.',
+    q: '¿Tengo que pagar impuestos en aduana en México?',
+    a: 'En la mayoría de los envíos a México con valor declarado bajo USD 50 no aplican aranceles. Para envíos con valor superior, pueden generarse impuestos al recibir el paquete según legislación SAT. El precio del producto NO incluye estos posibles cargos aduaneros. Te recomendamos consultar la legislación vigente del SAT antes de comprar.',
   },
-  // === Comparativa (segunda mais relevante) ===
+  {
+    id: 'faq-aranceles-co',
+    q: '¿Cobran impuestos de aduana en Colombia? ¿Qué dice la DIAN?',
+    a: 'En Colombia, la DIAN exonera de IVA y aranceles los envíos internacionales con valor declarado igual o inferior a USD 200 (Resolución 46 de 2019, Decreto 410 de 2020). Lensmind™ Edition 01 a $149.99 USD queda dentro de esa franja en la mayoría de los casos, por lo que no debería generar cargos aduaneros adicionales. Si la valoración aduanera supera el umbral, pueden aplicar IVA del 19%. Consulta la normativa vigente de la DIAN antes de comprar.',
+  },
+  {
+    id: 'faq-pago-co',
+    q: '¿Qué métodos de pago aceptan en Colombia? ¿Funciona PSE y Mercado Pago?',
+    a: 'En Colombia aceptamos Visa, Mastercard, Apple Pay, Google Pay, Shop Pay y Mercado Pago Colombia (que incluye PSE para pagos directos desde tu cuenta bancaria nacional, además de tarjetas locales). El pago se procesa en USD con conversión automática al peso colombiano según la tasa de cambio del banco emisor. Pago en cuotas disponible según tu banco — consulta con tu emisor de tarjeta antes de comprar.',
+  },
+  // === Comparativa (ângulo competitivo) ===
   {
     id: 'faq-vs-rayban',
     q: '¿En qué se diferencian de Ray-Ban Meta?',
-    a: 'Lensmind™ comparte el nivel técnico (cámara HD, IA por voz, audio open-ear, Bluetooth 5.3) con ventajas claras: traductor con 40 idiomas (12 offline), disponibilidad oficial en LATAM con soporte en español/portugués, pago en moneda local con cuotas, y garantía con reposición regional. Ray-Ban Meta no tiene presencia oficial en México, Colombia ni Chile al cierre de esta página.',
+    a: 'Lensmind™ comparte el nivel técnico de Ray-Ban Meta (cámara HD, IA por voz, audio open-ear, Bluetooth 5.3) con ventajas claras: traductor de 40 idiomas (12 offline), disponibilidad oficial en LATAM con soporte en español/portugués, pago en moneda local con cuotas, y garantía con reposición regional. Ray-Ban Meta no tiene presencia oficial en México ni Colombia al cierre de esta página — comprarlo implica importación con aranceles del 35-50%.',
   },
   // === Garantía e devolução ===
   {
     id: 'faq-garantia',
     q: '¿Cuál es la garantía?',
-    a: '30 días de devolución sin preguntas + 1 año de garantía de fábrica contra defectos de fabricación. Si dentro de los 30 días no estás satisfecho por cualquier motivo, te devolvemos el 100% del dinero y pagamos el envío de regreso. Soporte técnico oficial en español y portugués.',
+    a: '30 días de devolución sin preguntas + 1 año de garantía de fábrica contra defectos de fabricación. Si dentro de los 30 días no estás satisfecho por cualquier motivo, te devolvemos el 100% del dinero y pagamos el envío de regreso. Soporte técnico oficial en español y portugués durante todo el período de garantía.',
   },
   {
     id: 'faq-devoluciones',
     q: '¿Cómo funcionan las devoluciones?',
-    a: 'Si no estás satisfecho, escríbenos dentro de los primeros 30 días desde la recepción y coordinamos la devolución con guía prepagada (tú no pagas el envío de regreso). El producto debe estar en su estado original con todos los accesorios. Reembolso en 5-10 días hábiles después de recibir el producto de vuelta en nuestro centro.',
+    a: 'Si no estás satisfecho, escríbenos dentro de los primeros 30 días desde la recepción y coordinamos la devolución con guía prepagada (tú no pagas el envío de regreso). El producto debe estar en su estado original con todos los accesorios. Reembolso en 5-10 días hábiles después de recibir el producto de vuelta en nuestro centro logístico.',
   },
   // === Privacidad — pivot competitivo ===
   {
     id: 'faq-privacidad',
     q: '¿Qué pasa con la privacidad de mis videos?',
-    a: 'Tus videos quedan en las gafas hasta que TÚ decides transferirlos. No hay carga automática a la nube, no se usan para entrenar inteligencia artificial, y no son revisados por personas. El LED frontal se enciende cada vez que la cámara graba — transparencia total para ti y para quienes te rodean. Cumplimos con la Ley Federal de Protección de Datos Personales de México.',
+    a: 'Tus videos quedan en las gafas hasta que TÚ decides transferirlos. No hay carga automática a la nube, no se usan para entrenar inteligencia artificial, y no son revisados por personas. El LED frontal se enciende cada vez que la cámara graba — transparencia total para ti y para quienes te rodean. Cumplimos con la LFPDPPP de México y la Ley 1581 de Habeas Data de Colombia.',
   },
   {
     id: 'faq-ia-entrena',
     q: '¿Mis grabaciones entrenan alguna IA?',
-    a: 'No. Lensmind™ no usa el contenido grabado por usuarios para entrenar modelos de inteligencia artificial, ni los comparte con terceros para ese fin. Los modelos de IA del traductor y asistente de voz fueron entrenados antes del lanzamiento con datasets independientes.',
+    a: 'No. Lensmind™ no usa el contenido grabado por usuarios para entrenar modelos de inteligencia artificial, ni los comparte con terceros para ese fin. Los modelos de IA del traductor y asistente de voz fueron entrenados antes del lanzamiento con datasets independientes y públicos.',
   },
   // === Características técnicas ===
   {
     id: 'faq-app',
     q: '¿Necesito instalar una app?',
-    a: 'Sí. Lensmind™ se sincroniza con la app oficial (iOS/Android) para gestionar fotos, videos, configuración y actualizaciones. La app es gratuita y compatible con iOS 14+ y Android 9+.',
+    a: 'Sí. Lensmind™ se sincroniza con la app oficial (iOS/Android) para gestionar fotos, videos, configuración y actualizaciones. La app es gratuita y compatible con iOS 14+ y Android 9+. Disponible en App Store y Google Play.',
   },
   {
     id: 'faq-celular',
@@ -72,16 +91,16 @@ const faqs = [
     q: '¿Tienen graduación o lentes intercambiables?',
     a: 'Sí. Compatibles con lentes graduados estándar (esférico hasta -6 / +4). Servicio de instalación en óptica de confianza. Las micas claras son intercambiables por las del color que prefieras (gris, ámbar, espejo).',
   },
-  // === Pago ===
+  // === Pago general ===
   {
     id: 'faq-pago',
     q: '¿Qué métodos de pago aceptan?',
-    a: 'Visa, Mastercard, Apple Pay, Google Pay, Shop Pay y Mercado Pago. Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
+    a: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal, Shop Pay y Mercado Pago. Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
   },
   {
     id: 'faq-soporte',
     q: '¿Cómo es el soporte después de la compra?',
-    a: 'Soporte oficial en español y portugués vía WhatsApp y email. Tiempo de respuesta promedio: menos de 5 minutos en horario laboral, 24h fuera de horario. Acompañamiento desde la entrega hasta cualquier duda técnica durante el primer año de uso.',
+    a: 'Soporte oficial en español y portugués vía WhatsApp y email. Tiempo de respuesta promedio: menos de 5 minutos en horario laboral (Lun–Vie 9h–19h hora local MX/CO), 24h fuera de horario. Acompañamiento desde la entrega hasta cualquier duda técnica durante el primer año de uso.',
   },
 ];
 
