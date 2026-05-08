@@ -32,7 +32,7 @@ export default function ComparisonInline({
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-ink-700">
-            {headers.map((h, i) => (
+            {(headers ?? []).map((h, i) => (
               <th
                 key={i}
                 className={`text-left p-4 md:p-5 text-[11px] tracking-[0.18em] uppercase font-semibold ${
@@ -47,12 +47,12 @@ export default function ComparisonInline({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, ri) => (
+          {(rows ?? []).map((row, ri) => (
             <tr
               key={ri}
               className="border-b border-ink-800 last:border-b-0 hover:bg-ink-800/50 transition-colors"
             >
-              {row.map((cell, ci) => {
+              {(row ?? []).map((cell, ci) => {
                 const isHighlight = ci === highlightColumn;
                 const cellValue =
                   typeof cell === 'string' ? cell : cell.value;

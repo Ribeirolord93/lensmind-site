@@ -27,7 +27,7 @@ export default function KeyTakeaways({
         <p className="eyebrow text-ember">{title}</p>
       </div>
       <ul className="space-y-2.5">
-        {items.map((item, i) => (
+        {(items ?? []).map((item, i) => (
           <li
             key={i}
             className="flex items-start gap-3 text-bone-200 text-[15px] leading-relaxed"
