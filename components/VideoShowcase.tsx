@@ -36,7 +36,8 @@ export default function VideoShowcase() {
           src="/lensmind-lifestyle-cdmx.jpg"
           alt="Lensmind™ — joven en el centro histórico de Ciudad de México durante la hora dorada"
           fill
-          quality={88}
+          quality={82}
+          loading="lazy"
           sizes="100vw"
           className="object-cover"
         />

@@ -18,7 +18,7 @@ export default function Hero() {
           alt="Lensmind™ Edition 01 — gafas inteligentes con cámara y asistente de IA"
           fill
           priority
-          quality={90}
+          quality={85}
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-cover object-[40%_top] lg:object-center"
         />

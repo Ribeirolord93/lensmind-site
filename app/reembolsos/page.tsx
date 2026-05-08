@@ -46,8 +46,8 @@ export default function ReembolsosPage() {
       <h2>Plazos de reembolso</h2>
       <ul>
         <li><strong>Tarjeta de crédito/débito:</strong> 5-10 días hábiles después de recibir el producto de vuelta (depende del banco emisor).</li>
-        <li><strong>MercadoPago:</strong> 3-5 días hábiles.</li>
-        <li><strong>PIX (Brasil):</strong> 1-2 días hábiles.</li>
+        <li><strong>Apple Pay / Google Pay / Shop Pay:</strong> 5-10 días hábiles (vuelve al método de pago original).</li>
+        <li><strong>Mercado Pago:</strong> 3-5 días hábiles.</li>
       </ul>
 
       <h2>Garantía de fábrica</h2>

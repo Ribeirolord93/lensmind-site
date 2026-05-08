@@ -6,6 +6,7 @@ import { Shield, Lock, Truck, RefreshCw } from 'lucide-react';
 import ProductGallery from './ProductGallery';
 import BuyButton from './BuyButton';
 import ReviewsBar from './ReviewsBar';
+import PaymentMethods from './PaymentMethods';
 import type { Product } from '@/types/shopify';
 
 interface ProductShowcaseProps {
@@ -198,19 +199,9 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
               })}
             </div>
 
-            {/* Pago aceitos */}
-            <div className="flex flex-wrap items-center gap-2 pt-4">
-              <span className="text-[10px] tracking-[0.15em] uppercase text-smoke-500 mr-2">
-                Pagos:
-              </span>
-              {['VISA', 'MC', 'AMEX', 'MP', 'PIX'].map((m) => (
-                <span
-                  key={m}
-                  className="text-[10px] font-bold tracking-tight text-smoke-400 px-2 py-1 border border-ink-700 rounded"
-                >
-                  {m}
-                </span>
-              ))}
+            {/* Pago aceitos — logos oficiais coloridas */}
+            <div className="pt-4">
+              <PaymentMethods size="sm" variant="dark" />
             </div>
 
             {/* Privacy link — pivot competitivo */}

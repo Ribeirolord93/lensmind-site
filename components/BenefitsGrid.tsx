@@ -17,7 +17,7 @@ export default function BenefitsGrid() {
         mediaLabel="ESPACIO PARA VIDEO"
         mediaSpec="demo cámara · 16:9 · MP4"
         aspectRatio="product"
-        imageSrc="/products/lensmind-camera-exploded.jpg"
+        imageSrc="/products/lensmind-camera-exploded.webp"
         imageAlt="Lensmind™ — vista explotada del módulo de cámara mostrando lentes ópticas, sensor y placa de circuito"
       />
 
@@ -54,8 +54,8 @@ export default function BenefitsGrid() {
         mediaLabel="ESPACIO PARA IMAGEN"
         mediaSpec="detalle audio · 1:1 · WebP"
         aspectRatio="landscape"
-        imageSrc="/products/lensmind-audio-wave.jpg"
-        imageAlt="Lensmind™ — onda sonora direccional emitida por la bocina integrada en la varilla"
+        imageSrc="/products/lensmind-side-audio.webp"
+        imageAlt="Lensmind™ — onda sonora direccional emitida por la bocina integrada en la varilla, con logo Lensmind™ visible"
       />
 
       {/* 04 - Traductor */}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Eye, Shield, Lock, Wifi, FileX, Bell } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -63,7 +64,7 @@ export default function PrivacidadDatosPage() {
           </nav>
 
           {/* Hero */}
-          <div className="max-w-4xl mb-16 md:mb-20">
+          <div className="max-w-4xl mb-12 md:mb-16">
             <p className="eyebrow mb-6">Privacidad y datos</p>
             <h1 className="display-heading text-display-lg text-bone text-balance mb-6">
               Tus videos.
@@ -78,6 +79,34 @@ export default function PrivacidadDatosPage() {
               encriptación de transferencia — pensando primero en quien las usa
               y en quien aparece frente a ellas.
             </p>
+          </div>
+
+          {/* Visual proof — LED visible al grabar */}
+          <div className="relative mb-16 md:mb-20 rounded-3xl overflow-hidden bg-ink-900 border border-ink-700">
+            <div className="relative aspect-[4/3] md:aspect-[16/9]">
+              <Image
+                src="/products/lensmind-camera-led.jpg"
+                alt="Lensmind™ Edition 01 — LED rojo encendido en la varilla, indicando que la cámara está grabando activamente"
+                fill
+                quality={85}
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                className="object-cover"
+              />
+              {/* Gradient overlay para legibilidade */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent"
+              />
+              {/* Caption sobre a imagem */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                <p className="eyebrow mb-3 text-ember">
+                  · Indicador visible
+                </p>
+                <p className="display-heading text-2xl md:text-3xl lg:text-4xl text-bone tracking-tight max-w-2xl">
+                  Cuando graban, todos lo saben.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Six principles */}

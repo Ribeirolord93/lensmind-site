@@ -36,9 +36,9 @@ export default function TerminosPage() {
       <h2>3. Proceso de compra y pago</h2>
       <p>
         El proceso de compra se realiza a través de la plataforma Shopify, con
-        pasarelas de pago seguras (Visa, Mastercard, American Express,
-        MercadoPago y métodos locales según país). Al confirmar la compra,
-        recibirás un correo de confirmación con el detalle del pedido.
+        pasarelas de pago seguras (Visa, Mastercard, Apple Pay, Google Pay,
+        Shop Pay y Mercado Pago). Al confirmar la compra, recibirás un correo
+        de confirmación con el detalle del pedido.
       </p>
 
       <h2>4. Envíos y plazos</h2>

@@ -76,7 +76,7 @@ const faqs = [
   {
     id: 'faq-pago',
     q: '¿Qué métodos de pago aceptan?',
-    a: 'Visa, Mastercard, American Express, MercadoPago y PIX (Brasil). Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
+    a: 'Visa, Mastercard, Apple Pay, Google Pay, Shop Pay y Mercado Pago. Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
   },
   {
     id: 'faq-soporte',

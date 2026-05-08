@@ -6,9 +6,10 @@ import Analytics from '@/components/Analytics';
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -68,6 +69,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={inter.variable}>
+      <head>
+        {/* Preconnect a domínios críticos — economiza ~150ms na primeira carga */}
+        <link rel="preconnect" href="https://cdn.shopify.com" />
+        <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
+        {/* Theme color pra mobile (top bar do navegador) */}
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className="font-sans bg-ink text-bone antialiased">
         {children}
         <CookieBanner />

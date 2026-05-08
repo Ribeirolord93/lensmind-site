@@ -9,31 +9,36 @@ interface ProductGalleryProps {
   productTitle: string;
 }
 
-// Local product photos — generated for Lensmind™ Edition 01.
-// When env flag is enabled (or Shopify has no real photos), the gallery
-// uses these instead of supplier photos with promotional text overlays.
-// Local product photos — actual product photography of Lensmind™ Edition 01.
-// These are used by default; supplier Shopify photos with promotional overlays
-// can be enabled via NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true.
+// v16: Fotos atualizadas — produção própria da Daiane.
+// Capa (#1) é a foto com logo Lensmind™ gravado + LED vermelho aceso = trust máximo.
+// Substitui as 4 fotos antigas (front, 3quarter, camera-detail, side).
+//
+// Quando NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true, usa as fotos do Shopify Admin.
+// Default: usa as fotos locais abaixo.
 const LOCAL_PHOTOS = [
   {
-    url: '/products/lensmind-product-front.jpg',
-    alt: 'Lensmind™ Edition 01 — vista frontal mostrando lentes claras e oscuras intercambiables',
+    url: '/products/lensmind-camera-led.jpg',
+    alt: 'Lensmind™ Edition 01 — vista frontal con logo Lensmind™ grabado en la varilla y LED rojo encendido durante grabación',
     aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-product-3quarter.jpg',
-    alt: 'Lensmind™ Edition 01 — vista tres cuartos con lente removible y sistema modular visible',
+    url: '/products/lensmind-profile-audio.webp',
+    alt: 'Lensmind™ Edition 01 — perfil lateral con onda sonora direccional saliendo de la varilla',
     aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-product-camera-detail.jpg',
-    alt: 'Lensmind™ Edition 01 — detalle macro de la cámara integrada y pines de carga dorados',
+    url: '/products/lensmind-camera-exploded.webp',
+    alt: 'Lensmind™ Edition 01 — vista explotada del módulo de cámara mostrando sensor, lentes ópticas y componentes',
     aspectRatio: 'product' as const,
   },
   {
-    url: '/products/lensmind-product-side.jpg',
-    alt: 'Lensmind™ Edition 01 — perfil lateral con botón de control y diseño slim',
+    url: '/products/lensmind-side-audio.webp',
+    alt: 'Lensmind™ Edition 01 — vista lateral con micrófono direccional y onda sonora azul',
+    aspectRatio: 'product' as const,
+  },
+  {
+    url: '/products/lensmind-hinge-circuit.webp',
+    alt: 'Lensmind™ Edition 01 — detalle constructivo de la bisagra con circuitos integrados visibles',
     aspectRatio: 'product' as const,
   },
 ];
@@ -44,101 +49,68 @@ export default function ProductGallery({
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // DEFAULT: use local clean photos (the 4 we generated).
+  // DEFAULT: use local clean photos (the 5 new ones from Daiane).
   // Set NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true ONLY when Shopify product photos
   // are clean (no promotional text overlays). Until then, local photos win.
   const useShopifyPhotos =
     process.env.NEXT_PUBLIC_USE_SHOPIFY_PHOTOS === 'true';
 
-  // Filter out Unsplash mock placeholders
-  const realShopifyImages = images.filter(
-    (img) => !img.url.includes('unsplash.com')
-  );
+  const activePhotos = useShopifyPhotos && images.length > 0
+    ? images.map((img) => ({
+        url: img.url,
+        alt: img.altText || productTitle,
+        aspectRatio: 'product' as const,
+      }))
+    : LOCAL_PHOTOS;
 
-  // Decide which set to use:
-  //  - useShopifyPhotos=true AND Shopify has real images → use Shopify
-  //  - otherwise → use local photos (default, safe path)
-  const useLocal = !useShopifyPhotos || realShopifyImages.length === 0;
+  const currentPhoto = activePhotos[activeIndex] || activePhotos[0];
 
-  if (useLocal) {
-    const active = LOCAL_PHOTOS[activeIndex];
-
-    return (
-      <div className="space-y-3">
-        {/* Main photo */}
-        <div className="relative aspect-product bg-ink-900 overflow-hidden rounded-2xl group">
-          <Image
-            src={active.url}
-            alt={active.alt}
-            fill
-            priority
-            quality={92}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-          />
-        </div>
-
-        {/* Thumbnails — 4 product photos */}
-        <div className="grid grid-cols-4 gap-2">
-          {LOCAL_PHOTOS.map((photo, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveIndex(i)}
-              className={`relative aspect-square-ratio overflow-hidden rounded-xl transition-all duration-300 bg-ink-900 ${
-                i === activeIndex
-                  ? 'ring-1 ring-bone opacity-100'
-                  : 'opacity-50 hover:opacity-100'
-              }`}
-              aria-label={`Ver imagen ${i + 1} de Lensmind™`}
-            >
-              <Image
-                src={photo.url}
-                alt={photo.alt}
-                fill
-                sizes="120px"
-                className="object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-    );
+  if (!currentPhoto) {
+    return null;
   }
 
-  // Real Shopify photos path
-  const active = realShopifyImages[activeIndex];
-
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-product bg-ink-900 overflow-hidden rounded-2xl group">
+    <div className="space-y-4">
+      {/* Main image */}
+      <div
+        className={`relative overflow-hidden rounded-2xl bg-ink-900 ${
+          currentPhoto.aspectRatio === 'product'
+            ? 'aspect-product'
+            : 'aspect-square-ratio'
+        }`}
+      >
         <Image
-          src={active.url}
-          alt={active.altText || productTitle}
+          src={currentPhoto.url}
+          alt={currentPhoto.alt}
           fill
-          priority
+          priority={activeIndex === 0}
+          quality={85}
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          className="object-cover transition-opacity duration-500"
         />
       </div>
 
-      {realShopifyImages.length > 1 && (
-        <div className="grid grid-cols-4 gap-2">
-          {realShopifyImages.slice(0, 4).map((img, i) => (
+      {/* Thumbnails */}
+      {activePhotos.length > 1 && (
+        <div className="grid grid-cols-5 gap-2 md:gap-3">
+          {activePhotos.map((photo, i) => (
             <button
-              key={i}
+              key={photo.url}
               onClick={() => setActiveIndex(i)}
-              className={`relative aspect-square-ratio overflow-hidden rounded-xl transition-all duration-300 ${
-                i === activeIndex
-                  ? 'ring-1 ring-bone opacity-100'
-                  : 'opacity-50 hover:opacity-100'
+              className={`relative aspect-square-ratio overflow-hidden rounded-lg bg-ink-900 border transition-all duration-300 ${
+                activeIndex === i
+                  ? 'border-ember opacity-100'
+                  : 'border-ink-700 opacity-60 hover:opacity-100 hover:border-ink-600'
               }`}
-              aria-label={`Ver imagen ${i + 1}`}
+              aria-label={`Ver foto ${i + 1} de ${activePhotos.length}`}
+              aria-current={activeIndex === i}
             >
               <Image
-                src={img.url}
-                alt={img.altText || ''}
+                src={photo.url}
+                alt=""
                 fill
-                sizes="120px"
+                quality={70}
+                sizes="(min-width: 1024px) 10vw, 20vw"
                 className="object-cover"
               />
             </button>
