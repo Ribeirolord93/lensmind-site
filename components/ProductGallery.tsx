@@ -9,37 +9,28 @@ interface ProductGalleryProps {
   productTitle: string;
 }
 
-// v16: Fotos atualizadas — produção própria da Daiane.
-// Capa (#1) é a foto com logo Lensmind™ gravado + LED vermelho aceso = trust máximo.
-// Substitui as 4 fotos antigas (front, 3quarter, camera-detail, side).
-//
-// Quando NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true, usa as fotos do Shopify Admin.
-// Default: usa as fotos locais abaixo.
-const LOCAL_PHOTOS = [
+// Fallback local — usado SOMENTE se o produto Shopify não retornar fotos.
+// Default agora: usa as fotos do Shopify (que Daiane padronizou no admin).
+const FALLBACK_PHOTOS = [
   {
     url: '/products/lensmind-camera-led.jpg',
     alt: 'Lensmind™ Edition 01 — vista frontal con logo Lensmind™ grabado en la varilla y LED rojo encendido durante grabación',
-    aspectRatio: 'product' as const,
   },
   {
     url: '/products/lensmind-profile-audio.webp',
     alt: 'Lensmind™ Edition 01 — perfil lateral con onda sonora direccional saliendo de la varilla',
-    aspectRatio: 'product' as const,
   },
   {
     url: '/products/lensmind-camera-exploded.webp',
     alt: 'Lensmind™ Edition 01 — vista explotada del módulo de cámara mostrando sensor, lentes ópticas y componentes',
-    aspectRatio: 'product' as const,
   },
   {
     url: '/products/lensmind-side-audio.webp',
     alt: 'Lensmind™ Edition 01 — vista lateral con micrófono direccional y onda sonora azul',
-    aspectRatio: 'product' as const,
   },
   {
     url: '/products/lensmind-hinge-circuit.webp',
     alt: 'Lensmind™ Edition 01 — detalle constructivo de la bisagra con circuitos integrados visibles',
-    aspectRatio: 'product' as const,
   },
 ];
 
@@ -49,19 +40,19 @@ export default function ProductGallery({
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // DEFAULT: use local clean photos (the 5 new ones from Daiane).
-  // Set NEXT_PUBLIC_USE_SHOPIFY_PHOTOS=true ONLY when Shopify product photos
-  // are clean (no promotional text overlays). Until then, local photos win.
-  const useShopifyPhotos =
-    process.env.NEXT_PUBLIC_USE_SHOPIFY_PHOTOS === 'true';
+  // SOURCE OF TRUTH: Shopify Admin product photos.
+  // Se o produto Shopify retornou imagens, usa elas. Senão cai no fallback local.
+  // Override: setar NEXT_PUBLIC_FORCE_LOCAL_PHOTOS=true pra ignorar Shopify
+  // (útil pra debug ou se Shopify estiver com fotos com texto promocional).
+  const forceLocal = process.env.NEXT_PUBLIC_FORCE_LOCAL_PHOTOS === 'true';
 
-  const activePhotos = useShopifyPhotos && images.length > 0
-    ? images.map((img) => ({
-        url: img.url,
-        alt: img.altText || productTitle,
-        aspectRatio: 'product' as const,
-      }))
-    : LOCAL_PHOTOS;
+  const activePhotos =
+    !forceLocal && images.length > 0
+      ? images.map((img) => ({
+          url: img.url,
+          alt: img.altText || productTitle,
+        }))
+      : FALLBACK_PHOTOS;
 
   const currentPhoto = activePhotos[activeIndex] || activePhotos[0];
 
@@ -72,13 +63,7 @@ export default function ProductGallery({
   return (
     <div className="space-y-4">
       {/* Main image */}
-      <div
-        className={`relative overflow-hidden rounded-2xl bg-ink-900 ${
-          currentPhoto.aspectRatio === 'product'
-            ? 'aspect-product'
-            : 'aspect-square-ratio'
-        }`}
-      >
+      <div className="relative overflow-hidden rounded-2xl bg-ink-900 aspect-product">
         <Image
           src={currentPhoto.url}
           alt={currentPhoto.alt}

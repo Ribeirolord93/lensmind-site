@@ -22,6 +22,11 @@ const RATING = 4.9;
 const REVIEW_COUNT = 11293;
 const SOURCE = 'Trustpilot';
 
+// Cor das estrelas: amber-400 (#FBBF24) — padrão indústria pra rating stars
+// (Google reviews, Booking.com, Trustpilot lockup). Dourado quente, alta legibilidade.
+const STAR_FILLED_CLASS = 'text-amber-400 fill-amber-400';
+const STAR_EMPTY_CLASS = 'text-smoke-700';
+
 export default function ReviewsBar({ compact = false }: ReviewsBarProps) {
   // Render 5 stars
   const stars = Array.from({ length: 5 }, (_, i) => {
@@ -55,9 +60,7 @@ export default function ReviewsBar({ compact = false }: ReviewsBarProps) {
                 key={s.idx}
                 size={14}
                 className={
-                  s.filled || s.halfFilled
-                    ? 'text-ember fill-ember'
-                    : 'text-smoke-700'
+                  s.filled || s.halfFilled ? STAR_FILLED_CLASS : STAR_EMPTY_CLASS
                 }
                 strokeWidth={1.5}
               />
@@ -94,9 +97,7 @@ export default function ReviewsBar({ compact = false }: ReviewsBarProps) {
               key={s.idx}
               size={18}
               className={
-                s.filled || s.halfFilled
-                  ? 'text-ember fill-ember'
-                  : 'text-smoke-700'
+                s.filled || s.halfFilled ? STAR_FILLED_CLASS : STAR_EMPTY_CLASS
               }
               strokeWidth={1.5}
             />
