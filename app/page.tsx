@@ -186,9 +186,9 @@ export default async function HomePage() {
         <FeatureSpotlight
           eyebrow="Audio espacial"
           headline="Escucha sin oídos tapados."
-          body="Cuatro micrófonos direccionales. Altavoces ocultos en las patillas. Música, llamadas, traducciones — solo tú las escuchas. Tus oídos siguen libres para el mundo que te rodea."
-          subBody="Sin Bluetooth de auriculares. Sin cables. Sin esfuerzo."
-          imageSrc="/products/lensmind-audio-spatial.jpg"
+          subhead="Cuatro micrófonos direccionales. Altavoces ocultos en las patillas. Música, llamadas, traducciones — solo tú las escuchas. Tus oídos siguen libres para el mundo que te rodea."
+          microCopy="Sin Bluetooth de auriculares. Sin cables. Sin esfuerzo."
+          image="/products/lensmind-audio-spatial.jpg"
           imageAlt="Detalle del lateral de las gafas Lensmind con ondas de audio espacial visibles, mostrando los altavoces direccionales integrados en las patillas"
           imagePosition="left"
         />
@@ -201,9 +201,9 @@ export default async function HomePage() {
         <FeatureSpotlight
           eyebrow="Cámara 1080p · LED de privacidad"
           headline="Captura el momento. Respeta a quien está en él."
-          body="Cada vez que grabas, un LED rojo se enciende automáticamente. Visible para todos. Sin opción de desactivar."
-          subBody="Porque tu privacidad no es negociable — la de los demás tampoco."
-          imageSrc="/products/lensmind-camera-privacy.jpg"
+          subhead="Cada vez que grabas, un LED rojo se enciende automáticamente. Visible para todos. Sin opción de desactivar."
+          microCopy="Porque tu privacidad no es negociable — la de los demás tampoco."
+          image="/products/lensmind-camera-privacy.jpg"
           imageAlt="Primer plano de la cámara 1080p integrada en las gafas Lensmind con el LED rojo de grabación encendido, demostrando la transparencia visual hacia las personas alrededor"
           imagePosition="right"
         />
