@@ -30,7 +30,7 @@ export default function FinalCTA() {
 
           <p className="text-bone-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
             Cámara Sony 1080p · IA por voz · Traductor 40 idiomas.
-            Envío en 24h con tracking activo.
+            Despacho en 24h · Entrega 10-17 días con tracking activo.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">

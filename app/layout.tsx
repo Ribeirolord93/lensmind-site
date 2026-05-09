@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Lensmind' }],
   openGraph: {
     type: 'website',
-    locale: 'es_MX',
+    locale: 'es',
     url: '/',
     siteName: 'Lensmind',
     title: 'Lensmind™ — Gafas Inteligentes con IA',
@@ -76,8 +76,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
-        {/* Theme color pra mobile (top bar do navegador) */}
-        <meta name="theme-color" content="#000000" />
+        {/* Facebook Domain Verification — substituir CONTENT_AQUI pelo valor que o Meta gerou */}
+        <meta name="facebook-domain-verification" content="CONTENT_AQUI" />
+        {/* Theme color pra mobile (top bar do navegador) — alinhado com paleta ink-900 */}
+        <meta name="theme-color" content="#0A0A0A" />
       </head>
       <body className="font-sans bg-ink text-bone antialiased">
         {children}
