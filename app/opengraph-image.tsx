@@ -145,7 +145,7 @@ export default async function OpenGraphImage() {
               fontSize: 24,
             }}
           >
-            $329
+            $199
           </span>
           <span style={{ fontWeight: 300 }}>$149.99 USD</span>
           <span
@@ -157,7 +157,7 @@ export default async function OpenGraphImage() {
               fontWeight: 600,
             }}
           >
-            -40%
+            -25%
           </span>
         </div>
       </div>
