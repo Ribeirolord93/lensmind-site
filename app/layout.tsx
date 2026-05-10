@@ -76,8 +76,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
-        {/* Facebook Domain Verification — substituir CONTENT_AQUI pelo valor que o Meta gerou */}
-        <meta name="facebook-domain-verification" content="CONTENT_AQUI" />
+        {/* Facebook Domain Verification — substituir s5s5zoqy7gg8b090b8gj06k3uxnyf6 pelo valor que o Meta gerou */}
+        <meta name="facebook-domain-verification" content="s5s5zoqy7gg8b090b8gj06k3uxnyf6" />
         {/* Theme color pra mobile (top bar do navegador) — alinhado com paleta ink-900 */}
         <meta name="theme-color" content="#0A0A0A" />
       </head>
