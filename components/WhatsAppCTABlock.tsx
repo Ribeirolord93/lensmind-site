@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { MessageCircle, Clock, Globe2 } from 'lucide-react';
 
 const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554991683659';
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '555491683659';
 
 export default function WhatsAppCTABlock() {
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
