@@ -10,7 +10,7 @@ const CONTACT_EMAIL =
 //   NEXT_PUBLIC_WHATSAPP_CO = 57xxxxxxxxxx  (Colombia)
 // Enquanto não configurado, mostra apenas o número default (BR/MX migration).
 const WHATSAPP_DEFAULT =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554991683659';
 const WHATSAPP_MX = process.env.NEXT_PUBLIC_WHATSAPP_MX || '';
 const WHATSAPP_CO = process.env.NEXT_PUBLIC_WHATSAPP_CO || '';
 

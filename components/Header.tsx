@@ -8,7 +8,7 @@ import { Menu, X, MessageCircle } from 'lucide-react';
 // Idealmente env var `NEXT_PUBLIC_WHATSAPP_NUMBER` aponta pro número MX (mercado primário).
 // Quando user já navegou pra contexto CO específico, podemos ajustar via geo-detection no futuro.
 const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554991683659';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);

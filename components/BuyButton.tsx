@@ -5,7 +5,7 @@ import { ShoppingBag, Loader2, ArrowRight, MessageCircle } from 'lucide-react';
 import { fireMetaEvent } from '@/lib/fbq-helpers';
 
 const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5521967440808';
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554991683659';
 
 interface BuyButtonProps {
   variantId: string;
