@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 
 interface ClientGalleryProps {
-  /** Quantas fotos exibir. Default: todas (46) */
+  /** Quantas fotos exibir. Default: todas (32) */
   limit?: number;
-  /** Layout: 'full' (home/produto) ou 'compact' (4 fotos lateral BuyButton) */
+  /** Layout: 'full' (carrossel horizontal) ou 'compact' (4 fotos lateral BuyButton) */
   variant?: 'full' | 'compact';
   /** Override do título */
   title?: string;
@@ -14,7 +14,7 @@ interface ClientGalleryProps {
   subtitle?: string;
 }
 
-// Lista das 46 fotos disponíveis em /public/clientes/
+// Lista das 32 fotos disponíveis em /public/clientes/
 const CLIENTES_FOTOS = Array.from({ length: 32 }, (_, i) => {
   const num = (i + 1).toString().padStart(2, '0');
   return `/clientes/cliente-${num}.jpg`;
@@ -46,7 +46,7 @@ export default function ClientGallery({
     });
   }, [fotos.length]);
 
-  // Keyboard navigation
+  // Keyboard navigation no lightbox
   useEffect(() => {
     if (selectedIndex === null) return;
     const handler = (e: KeyboardEvent) => {
@@ -62,7 +62,7 @@ export default function ClientGallery({
     };
   }, [selectedIndex, closeLightbox, goNext, goPrev]);
 
-  // Variante COMPACT: 4 fotos pequenas (lateral BuyButton)
+  // Variante COMPACT (4 fotos pequenas, lateral BuyButton)
   if (variant === 'compact') {
     const compactFotos = fotos.slice(0, 4);
     return (
@@ -77,7 +77,7 @@ export default function ClientGallery({
                 key={src}
                 onClick={() => openLightbox(idx)}
                 className="relative aspect-square overflow-hidden rounded-lg bg-neutral-100 hover:opacity-90 transition-opacity cursor-pointer"
-                aria-label={`Ver foto ${idx + 1} de nuestros clientes`}
+                aria-label={`Ver foto ${idx + 1}`}
               >
                 <Image
                   src={src}
@@ -104,49 +104,15 @@ export default function ClientGallery({
     );
   }
 
-  // Variante FULL: galeria completa masonry
+  // Variante FULL: CARROSSEL HORIZONTAL AUTO-SCROLL
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-light tracking-tight text-neutral-900">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="mt-3 text-base text-neutral-600 max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-          )}
-        </div>
-
-        {/* Masonry grid: 2 cols mobile, 3 cols tablet, 4 cols desktop */}
-        <div className="columns-2 sm:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
-          {fotos.map((src, idx) => (
-            <button
-              key={src}
-              onClick={() => openLightbox(idx)}
-              className="break-inside-avoid w-full overflow-hidden rounded-xl bg-neutral-100 hover:opacity-95 transition-all duration-300 cursor-pointer block group"
-              aria-label={`Ver foto ${idx + 1} en grande`}
-            >
-              <div className="relative w-full">
-                <Image
-                  src={src}
-                  alt={`Cliente Lensmind ${idx + 1}`}
-                  width={400}
-                  height={500}
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <p className="text-center text-xs text-neutral-400 mt-10">
-          Imágenes compartidas por compradores. Apariencia y uso pueden variar.
-        </p>
-      </div>
-
+    <>
+      <HorizontalCarousel
+        fotos={fotos}
+        title={title}
+        subtitle={subtitle}
+        onPhotoClick={openLightbox}
+      />
       {selectedIndex !== null && (
         <Lightbox
           src={fotos[selectedIndex]}
@@ -157,11 +123,183 @@ export default function ClientGallery({
           onPrev={goPrev}
         />
       )}
+    </>
+  );
+}
+
+// ====================================================
+// CARROSSEL HORIZONTAL COM AUTO-SCROLL + SETAS
+// ====================================================
+interface CarouselProps {
+  fotos: string[];
+  title: string;
+  subtitle: string;
+  onPhotoClick: (idx: number) => void;
+}
+
+function HorizontalCarousel({ fotos, title, subtitle, onPhotoClick }: CarouselProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const animationRef = useRef<number | null>(null);
+  const lastTimestampRef = useRef<number>(0);
+
+  // Velocidade do auto-scroll (pixels por segundo)
+  // 30px/s = lento e elegante, sem distrair
+  const SCROLL_SPEED = 30;
+
+  // Duplicamos as fotos pra criar loop infinito visual
+  const fotosLoop = [...fotos, ...fotos];
+
+  // Auto-scroll com requestAnimationFrame (suave + respeita refresh rate)
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const tick = (timestamp: number) => {
+      if (!lastTimestampRef.current) lastTimestampRef.current = timestamp;
+      const delta = (timestamp - lastTimestampRef.current) / 1000;
+      lastTimestampRef.current = timestamp;
+
+      if (!isPaused && container) {
+        const moveBy = SCROLL_SPEED * delta;
+        container.scrollLeft += moveBy;
+
+        // Quando chegar na metade (que é o fim da 1ª cópia), reseta pro início
+        // Cria ilusão de loop infinito sem cortes visuais
+        const halfScroll = container.scrollWidth / 2;
+        if (container.scrollLeft >= halfScroll) {
+          container.scrollLeft = container.scrollLeft - halfScroll;
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(tick);
+    };
+
+    animationRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused]);
+
+  // Navegação manual via setas
+  const scrollByAmount = (direction: 'left' | 'right') => {
+    const container = scrollRef.current;
+    if (!container) return;
+    // Cada foto tem ~240px de largura no desktop, ~180px no mobile
+    const itemWidth = window.innerWidth < 640 ? 200 : 280;
+    const scrollAmount = itemWidth * 2; // navega 2 fotos por vez
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <section className="py-16 md:py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 md:mb-12">
+          <h2 className="text-3xl md:text-4xl font-light tracking-tight text-neutral-900">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="mt-3 text-sm md:text-base text-neutral-600 max-w-2xl mx-auto">
+              {subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Container do carrossel — full bleed (sem max-w pra dar sensação de fluxo) */}
+      <div className="relative group">
+        {/* Setas de navegação */}
+        <button
+          onClick={() => scrollByAmount('left')}
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all opacity-70 hover:opacity-100 group-hover:opacity-100"
+          aria-label="Foto anterior"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-900">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <button
+          onClick={() => scrollByAmount('right')}
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all opacity-70 hover:opacity-100 group-hover:opacity-100"
+          aria-label="Foto siguiente"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-900">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        {/* Gradient masks nas bordas pra fade-out visual elegante */}
+        <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        {/* Track do carrossel */}
+        <div
+          ref={scrollRef}
+          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => {
+            // Resume autoplay 2s depois do user soltar (UX standard)
+            setTimeout(() => setIsPaused(false), 2000);
+          }}
+        >
+          {fotosLoop.map((src, idx) => {
+            // idx % fotos.length pra mapear back ao index original (importante pro lightbox)
+            const originalIdx = idx % fotos.length;
+            return (
+              <button
+                key={`${src}-${idx}`}
+                onClick={() => onPhotoClick(originalIdx)}
+                className="relative flex-shrink-0 w-[180px] h-[240px] md:w-[260px] md:h-[340px] overflow-hidden rounded-xl bg-neutral-100 cursor-pointer group/photo"
+                aria-label={`Ver foto ${originalIdx + 1} de nuestros clientes`}
+              >
+                <Image
+                  src={src}
+                  alt={`Cliente Lensmind ${originalIdx + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 180px, 260px"
+                  className="object-cover transition-transform duration-500 group-hover/photo:scale-105"
+                />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <p className="text-center text-xs text-neutral-400 mt-8 px-4">
+        Imágenes compartidas por compradores. Apariencia y uso pueden variar.
+      </p>
+
+      {/* CSS pra esconder scrollbar (Webkit) */}
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 }
 
-// === LIGHTBOX INTERNO ===
+// ====================================================
+// LIGHTBOX (mantido igual)
+// ====================================================
 interface LightboxProps {
   src: string;
   currentIndex: number;
@@ -181,12 +319,11 @@ function Lightbox({
 }: LightboxProps) {
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
-      {/* Close button */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -201,12 +338,10 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* Counter */}
       <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs md:text-sm font-medium">
         {currentIndex + 1} / {totalCount}
       </div>
 
-      {/* Prev */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -220,7 +355,6 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* Next */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -234,7 +368,6 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* Image */}
       <div
         className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
