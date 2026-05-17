@@ -2,14 +2,12 @@ import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
-import TrustGuarantee from '@/components/TrustGuarantee';
 import BenefitsGrid from '@/components/BenefitsGrid';
 import VideoShowcase from '@/components/VideoShowcase';
 import FeatureSpotlight from '@/components/FeatureSpotlight';
 import ProductShowcase from '@/components/ProductShowcase';
 import ComparisonTable from '@/components/ComparisonTable';
 import LaunchSection from '@/components/LaunchSection';
-import StatsBar from '@/components/StatsBar';
 import EmailCapture from '@/components/EmailCapture';
 import WhatsAppCTABlock from '@/components/WhatsAppCTABlock';
 import FAQ from '@/components/FAQ';
@@ -59,8 +57,6 @@ export default async function HomePage() {
     'USD';
 
   // JSON-LD Product schema (Google Shopping, rich results)
-  // shippingDestination: apenas geos com shipping rate configurado no Shopify.
-  // Adicionar país aqui SOMENTE depois de criar shipping zone correspondente.
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -84,8 +80,6 @@ export default async function HomePage() {
       price: parseFloat(price).toFixed(2),
       ...(compareAtPrice && parseFloat(compareAtPrice) > parseFloat(price)
         ? {
-            // Mostra "preço de lançamento" como desconto no Google Shopping
-            // priceSpecification permite ancoragem visual de desconto
             priceSpecification: {
               '@type': 'UnitPriceSpecification',
               price: parseFloat(price).toFixed(2),
@@ -103,8 +97,6 @@ export default async function HomePage() {
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
       url: SITE_URL,
-      // priceValidUntil: válido até fim do trimestre de lançamento.
-      // Atualizar trimestralmente conforme estratégia de pricing.
       priceValidUntil: '2026-09-30',
       shippingDetails: ACTIVE_SHIPPING_COUNTRIES.map((country) => ({
         '@type': 'OfferShippingDetails',
@@ -183,7 +175,7 @@ export default async function HomePage() {
         <TrustBar />
         <BenefitsGrid />
 
-        {/* Audio Spotlight (substitui VideoShowcase) */}
+        {/* Audio Spotlight (substitui o item Audio do BenefitsGrid) */}
         <FeatureSpotlight
           eyebrow="Audio espacial"
           headline="Escucha sin oídos tapados."
@@ -208,9 +200,6 @@ export default async function HomePage() {
           imageAlt="Primer plano de la cámara 1080p integrada en las gafas Lensmind con el LED rojo de grabación encendido, demostrando la transparencia visual hacia las personas alrededor"
           imagePosition="right"
         />
-
-        <TrustGuarantee />
-        <StatsBar />
 
         {/* Galería de clientes reales (fotos enviadas por compradores) */}
         <ClientGallery

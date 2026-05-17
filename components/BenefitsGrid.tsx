@@ -40,27 +40,11 @@ export default function BenefitsGrid() {
         reverse
       />
 
-      {/* 03 - Audio */}
+      {/* 03 - Traductor (era 04, renumerado pra manter sequência limpa) */}
+      {/* Item Audio (era 03) removido — agora coberto pelo FeatureSpotlight "Audio espacial" */}
+      {/* Sem `reverse` aqui pra manter alternância visual: 01 direita, 02 esquerda, 03 direita */}
       <FeatureBlock
-        eyebrow="03 · Audio"
-        title="Bocinas direccionales. Privacidad pública."
-        description="Sistema de audio open-ear con bocinas direccionales y 4 micrófonos con cancelación de ruido. Música, llamadas y podcasts sin auriculares ni cables."
-        bullets={[
-          '4 micrófonos con cancelación activa',
-          'Bocinas open-ear de alta fidelidad',
-          'Bluetooth 5.3 con baja latencia',
-          'Audio espacial direccional',
-        ]}
-        mediaLabel="ESPACIO PARA IMAGEN"
-        mediaSpec="detalle audio · 1:1 · WebP"
-        aspectRatio="landscape"
-        imageSrc="/products/lensmind-side-audio.webp"
-        imageAlt="Lensmind™ — onda sonora direccional emitida por la bocina integrada en la varilla, con logo Lensmind™ visible"
-      />
-
-      {/* 04 - Traductor */}
-      <FeatureBlock
-        eyebrow="04 · Traductor"
+        eyebrow="03 · Traductor"
         title="40 idiomas. En tiempo real. En tu oído."
         description="Conversaciones fluidas entre idiomas distintos. La IA escucha, traduce y te dice la respuesta al oído — sin apps, sin esperar, sin sacar el celular."
         bullets={[
@@ -74,7 +58,6 @@ export default function BenefitsGrid() {
         aspectRatio="video"
         imageSrc="/products/lensmind-translator-cafe.jpg"
         imageAlt="Lensmind™ — conversación fluida en café entre dos personas de idiomas distintos, traducida en tiempo real"
-        reverse
       />
     </div>
   );

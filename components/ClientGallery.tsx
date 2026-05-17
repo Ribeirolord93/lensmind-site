@@ -284,7 +284,7 @@ function HorizontalCarousel({ fotos, title, subtitle, onPhotoClick }: CarouselPr
       </div>
 
       <p className="text-center text-xs text-neutral-400 mt-8 px-4">
-        Imágenes compartidas por compradores. Apariencia y uso pueden variar.
+        Fotos publicadas por compradores en redes sociales. Lensmind no garantiza representatividad de uso. Edición 01 lanzada en mayo 2026.
       </p>
 
       {/* CSS pra esconder scrollbar (Webkit) */}

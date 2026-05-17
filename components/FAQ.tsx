@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 
-// FAQ otimizado para SEO MX + CO (mercados de lançamento Fase 1).
-// Removidas referências a Brasil/Chile/Perú/Argentina enquanto não há shipping ativo.
-// Perguntas Colombia adicionadas com keywords de cauda longa pra ranquear:
-//   - "envíos a colombia gafas inteligentes"
-//   - "PSE pago gafas con IA"
-//   - "DIAN aranceles smart glasses"
+// FAQ otimizado para CONVERSÃO (não SEO bruto).
+// 8 perguntas que decidem compra — não 17 que diluem atenção.
+// Cortadas: vs-rayban (já tem ComparisonTable visual), bateria (já TrustBar),
+// agua/graduacion (nicho), app/celular/soporte (técnico não-crítico),
+// ia-entrena (sub-item já coberto em "privacidad"), faq-pago genérico
+// (consolidado em faq-pago-co que cobre MX+CO+PSE+Mercado Pago).
 const faqs = [
-  // === Logística (mais perguntada) ===
+  // === LOGÍSTICA — top dúvidas (sempre mais perguntadas) ===
   {
     id: 'faq-envios',
     q: '¿Cuándo recibo mi pedido?',
@@ -22,6 +22,7 @@ const faqs = [
     q: '¿Hacen envíos a Colombia? ¿Cuánto tarda?',
     a: 'Sí, enviamos a toda Colombia: Bogotá, Medellín, Cali, Barranquilla, Cartagena y demás ciudades. El plazo es de 10 a 17 días hábiles desde la confirmación del pago, igual que en México. Despacho en 24 horas desde el centro logístico, con código de seguimiento activo desde el día 3. Las entregas en zonas rurales pueden sumar 2-4 días adicionales.',
   },
+  // === IMPUESTOS — bloqueio frequente de compra ===
   {
     id: 'faq-aranceles',
     q: '¿Tengo que pagar impuestos en aduana en México?',
@@ -32,18 +33,13 @@ const faqs = [
     q: '¿Cobran impuestos de aduana en Colombia? ¿Qué dice la DIAN?',
     a: 'En Colombia, la DIAN exonera de IVA y aranceles los envíos internacionales con valor declarado igual o inferior a USD 200 (Resolución 46 de 2019, Decreto 410 de 2020). Lensmind™ Edition 01 a $149.99 USD queda dentro de esa franja en la mayoría de los casos, por lo que no debería generar cargos aduaneros adicionales. Si la valoración aduanera supera el umbral, pueden aplicar IVA del 19%. Consulta la normativa vigente de la DIAN antes de comprar.',
   },
+  // === PAGAMENTO — consolidado (MX + CO + PSE + Mercado Pago) ===
   {
-    id: 'faq-pago-co',
-    q: '¿Qué métodos de pago aceptan en Colombia? ¿Funciona PSE y Mercado Pago?',
-    a: 'En Colombia aceptamos Visa, Mastercard, Apple Pay, Google Pay, Shop Pay y Mercado Pago Colombia (que incluye PSE para pagos directos desde tu cuenta bancaria nacional, además de tarjetas locales). El pago se procesa en USD con conversión automática al peso colombiano según la tasa de cambio del banco emisor. Pago en cuotas disponible según tu banco — consulta con tu emisor de tarjeta antes de comprar.',
+    id: 'faq-pago',
+    q: '¿Qué métodos de pago aceptan?',
+    a: 'Aceptamos Visa, Mastercard, Apple Pay, Google Pay, PayPal, Shop Pay y Mercado Pago. En Colombia, Mercado Pago incluye PSE para pagos directos desde tu cuenta bancaria nacional. El pago se procesa en USD con conversión automática a peso mexicano o colombiano según la tasa de cambio de tu banco. Pago en cuotas disponible según tu emisor de tarjeta. Toda la información se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
   },
-  // === Comparativa (ângulo competitivo) ===
-  {
-    id: 'faq-vs-rayban',
-    q: '¿En qué se diferencian de Ray-Ban Meta?',
-    a: 'Lensmind™ comparte el nivel técnico de Ray-Ban Meta (cámara HD, IA por voz, audio open-ear, Bluetooth 5.3) con ventajas claras: traductor de 40 idiomas (12 offline), disponibilidad oficial en LATAM con soporte en español/portugués, pago en moneda local con cuotas, y garantía con reposición regional. Ray-Ban Meta no tiene presencia oficial en México ni Colombia al cierre de esta página — comprarlo implica importación con aranceles del 35-50%.',
-  },
-  // === Garantía e devolução ===
+  // === GARANTIA + DEVOLUÇÃO — quebra objeção de "marca nova" ===
   {
     id: 'faq-garantia',
     q: '¿Cuál es la garantía?',
@@ -54,53 +50,11 @@ const faqs = [
     q: '¿Cómo funcionan las devoluciones?',
     a: 'Si no estás satisfecho, escríbenos dentro de los primeros 30 días desde la recepción y coordinamos la devolución con guía prepagada (tú no pagas el envío de regreso). El producto debe estar en su estado original con todos los accesorios. Reembolso en 5-10 días hábiles después de recibir el producto de vuelta en nuestro centro logístico.',
   },
-  // === Privacidad — pivot competitivo ===
+  // === PRIVACIDADE — pivot competitivo do produto ===
   {
     id: 'faq-privacidad',
     q: '¿Qué pasa con la privacidad de mis videos?',
     a: 'Tus videos quedan en las gafas hasta que TÚ decides transferirlos. No hay carga automática a la nube, no se usan para entrenar inteligencia artificial, y no son revisados por personas. El LED frontal se enciende cada vez que la cámara graba — transparencia total para ti y para quienes te rodean. Cumplimos con la LFPDPPP de México y la Ley 1581 de Habeas Data de Colombia.',
-  },
-  {
-    id: 'faq-ia-entrena',
-    q: '¿Mis grabaciones entrenan alguna IA?',
-    a: 'No. Lensmind™ no usa el contenido grabado por usuarios para entrenar modelos de inteligencia artificial, ni los comparte con terceros para ese fin. Los modelos de IA del traductor y asistente de voz fueron entrenados antes del lanzamiento con datasets independientes y públicos.',
-  },
-  // === Características técnicas ===
-  {
-    id: 'faq-app',
-    q: '¿Necesito instalar una app?',
-    a: 'Sí. Lensmind™ se sincroniza con la app oficial (iOS/Android) para gestionar fotos, videos, configuración y actualizaciones. La app es gratuita y compatible con iOS 14+ y Android 9+. Disponible en App Store y Google Play.',
-  },
-  {
-    id: 'faq-celular',
-    q: '¿Funcionan sin celular?',
-    a: 'La cámara, el audio y el traductor offline (12 idiomas) funcionan de forma autónoma sin necesidad de celular. Para funciones de IA avanzada, traductor de 40 idiomas en línea y sincronización en la nube se requiere conexión Bluetooth con tu celular.',
-  },
-  {
-    id: 'faq-bateria',
-    q: '¿Cuánto dura la batería?',
-    a: 'Hasta 4 horas de grabación continua de video, hasta 6 horas de uso mixto (audio + traductor + cámara puntual), y hasta 200 horas en modo standby. El estuche de carga incluido proporciona 3 cargas adicionales completas — más de un día completo de uso intensivo lejos del enchufe.',
-  },
-  {
-    id: 'faq-agua',
-    q: '¿Son resistentes al agua?',
-    a: 'Certificación IPX4 — resisten salpicaduras, sudor y lluvia ligera. No son aptas para sumergir ni para uso en piscina, ducha o actividades acuáticas.',
-  },
-  {
-    id: 'faq-graduacion',
-    q: '¿Tienen graduación o lentes intercambiables?',
-    a: 'Sí. Compatibles con lentes graduados estándar (esférico hasta -6 / +4). Servicio de instalación en óptica de confianza. Las micas claras son intercambiables por las del color que prefieras (gris, ámbar, espejo).',
-  },
-  // === Pago general ===
-  {
-    id: 'faq-pago',
-    q: '¿Qué métodos de pago aceptan?',
-    a: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal, Shop Pay y Mercado Pago. Pago en cuotas disponible según país y banco emisor. Toda la información de pago se procesa con encriptación SSL a través de Stripe — Lensmind nunca ve ni almacena tu número de tarjeta.',
-  },
-  {
-    id: 'faq-soporte',
-    q: '¿Cómo es el soporte después de la compra?',
-    a: 'Soporte oficial en español y portugués vía WhatsApp y email. Tiempo de respuesta promedio: menos de 5 minutos en horario laboral (Lun–Vie 9h–19h hora local MX/CO), 24h fuera de horario. Acompañamiento desde la entrega hasta cualquier duda técnica durante el primer año de uso.',
   },
 ];
 
@@ -114,7 +68,6 @@ export default function FAQ() {
     const idx = faqs.findIndex((f) => f.id === hash);
     if (idx >= 0) {
       setOpen(idx);
-      // Defer scroll until after expand animation
       setTimeout(() => {
         document.getElementById(hash)?.scrollIntoView({
           behavior: 'smooth',

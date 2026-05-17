@@ -129,13 +129,15 @@ export default function ProductShowcase({ product }: ProductShowcaseProps) {
               )}
             </div>
 
-            {/* Key specs */}
+            {/* Key specs — bullet 4 reformulada (era "Audio direccional + 4 micrófonos",
+                trocada por "Audio open-ear con cancelación activa" pra não competir em
+                quantidade com Ray-Ban que tem 5 micrófonos — agora compete em qualidade). */}
             <ul className="space-y-3 text-bone-200">
               {[
                 'Cámara Sony 1080p HD con anti-shake',
                 'Asistente de IA por voz integrado',
                 'Traductor en tiempo real · 40 idiomas',
-                'Audio direccional + 4 micrófonos',
+                'Audio open-ear con cancelación activa',
               ].map((spec, i) => (
                 <li key={i} className="flex items-start gap-3 text-[15px]">
                   <span className="text-ember mt-1.5 flex-shrink-0 text-xs">●</span>
