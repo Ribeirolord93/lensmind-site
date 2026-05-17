@@ -15,6 +15,7 @@ import WhatsAppCTABlock from '@/components/WhatsAppCTABlock';
 import FAQ from '@/components/FAQ';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
+import ClientGallery from '@/components/ClientGallery';
 
 import { getFirstProduct } from '@/lib/shopify';
 import { MOCK_PRODUCT } from '@/lib/mock-product';
@@ -210,6 +211,13 @@ export default async function HomePage() {
 
         <TrustGuarantee />
         <StatsBar />
+
+        {/* Galería de clientes reales (fotos enviadas por compradores) */}
+        <ClientGallery
+          title="Nuestros clientes"
+          subtitle="Fotos reales enviadas por compradores en Latinoamérica"
+        />
+
         <LaunchSection />
         <EmailCapture />
         <FAQ />
