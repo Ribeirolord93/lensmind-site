@@ -91,7 +91,7 @@ export default function TerminosPage() {
           <strong>Colombia (DIAN):</strong> envíos con valor declarado igual o
           inferior a USD 200 están exonerados de IVA y aranceles bajo la
           Resolución 46 de 2019 y el Decreto 410 de 2020. Lensmind™ Edition 01
-          ($149.99 USD) queda dentro de esa franja.
+          ($149.00 USD) queda dentro de esa franja.
         </li>
       </ul>
       <p>

@@ -166,7 +166,7 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-bone text-ink font-medium rounded-full"
             >
-              Comprar — $149.99 USD
+              Comprar — $149.00 USD
             </Link>
           </nav>
         </div>

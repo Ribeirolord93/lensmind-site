@@ -31,7 +31,7 @@ const faqs = [
   {
     id: 'faq-aranceles-co',
     q: '¿Cobran impuestos de aduana en Colombia? ¿Qué dice la DIAN?',
-    a: 'En Colombia, la DIAN exonera de IVA y aranceles los envíos internacionales con valor declarado igual o inferior a USD 200 (Resolución 46 de 2019, Decreto 410 de 2020). Lensmind™ Edition 01 a $149.99 USD queda dentro de esa franja en la mayoría de los casos, por lo que no debería generar cargos aduaneros adicionales. Si la valoración aduanera supera el umbral, pueden aplicar IVA del 19%. Consulta la normativa vigente de la DIAN antes de comprar.',
+    a: 'En Colombia, la DIAN exonera de IVA y aranceles los envíos internacionales con valor declarado igual o inferior a USD 200 (Resolución 46 de 2019, Decreto 410 de 2020). Lensmind™ Edition 01 a $149.00 USD queda dentro de esa franja en la mayoría de los casos, por lo que no debería generar cargos aduaneros adicionales. Si la valoración aduanera supera el umbral, pueden aplicar IVA del 19%. Consulta la normativa vigente de la DIAN antes de comprar.',
   },
   // === PAGAMENTO — consolidado (MX + CO + PSE + Mercado Pago) ===
   {

@@ -227,7 +227,7 @@ export default function ComparisonTable() {
             </div>
             <div className="w-28 md:w-36 text-center">
               <div className="text-bone font-semibold text-xl md:text-2xl">
-                $149.99
+                $149.00
               </div>
               <div className="text-[10px] uppercase tracking-wider text-ember">
                 USD

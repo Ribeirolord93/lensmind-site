@@ -144,7 +144,7 @@ export default async function OpenGraphImage() {
             <span>Diseñadas para Latinoamérica.</span>
           </div>
 
-          {/* Botão "Comprar — $149.99 USD →" — bg bone, texto ink */}
+          {/* Botão "Comprar — $149.00 USD →" — bg bone, texto ink */}
           <div
             style={{
               backgroundColor: BONE,
@@ -160,7 +160,7 @@ export default async function OpenGraphImage() {
               marginBottom: 18,
             }}
           >
-            <span>Comprar — $149.99 USD</span>
+            <span>Comprar — $149.00 USD</span>
             <span>→</span>
           </div>
 

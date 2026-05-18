@@ -30,7 +30,7 @@ export default function ProductCTA({
               {headline}
             </p>
             <p className="text-bone-300 text-sm">
-              $149.99 USD — precio de lanzamiento. Garantía 30 días.
+              $149.00 USD — precio de lanzamiento. Garantía 30 días.
             </p>
           </div>
           <Link
@@ -82,7 +82,7 @@ export default function ProductCTA({
               href="/#producto"
               className="inline-flex items-center gap-2 px-6 py-3 bg-bone text-ink font-medium text-sm rounded-full hover:bg-bone-300 transition-colors"
             >
-              <span>Comprar — $149.99 USD</span>
+              <span>Comprar — $149.00 USD</span>
               <ArrowRight size={15} />
             </Link>
             <Link

@@ -24,7 +24,7 @@ export default function BuyButton({
   className = '',
   contentId,
   contentName = 'Lensmind Edition 01',
-  value = 149.99,
+  value = 149.00,
   currency = 'USD',
 }: BuyButtonProps) {
   const [loading, setLoading] = useState(false);
@@ -167,7 +167,7 @@ export default function BuyButton({
         ) : (
           <>
             <ShoppingBag size={18} />
-            <span>Comprar ahora — $149.99 USD</span>
+            <span>Comprar ahora — $149.00 USD</span>
             <ArrowRight
               size={16}
               className="transition-transform group-hover:translate-x-1"
