@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Términos y condiciones de uso del sitio Lensmind™ y de la compra de productos en México y Colombia.',
   robots: { index: true, follow: true },
+  alternates: { canonical: '/terminos' },
 };
 
 export default function TerminosPage() {

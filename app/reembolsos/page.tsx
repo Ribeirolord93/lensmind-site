@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Política de Reembolsos y Devoluciones',
   description:
     'Política completa de reembolsos, devoluciones y garantía de Lensmind™.',
+  alternates: { canonical: '/reembolsos' },
 };
 
 export default function ReembolsosPage() {

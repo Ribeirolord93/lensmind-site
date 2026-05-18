@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Información sobre el uso de cookies y tecnologías similares en Lensmind™.',
   robots: { index: true, follow: true },
+  alternates: { canonical: '/cookies' },
 };
 
 export default function CookiesPage() {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Quiénes somos',
   description:
     'Lensmind™ — tecnología visual con IA pensada y soportada para Latinoamérica.',
+  alternates: { canonical: '/quienes-somos' },
 };
 
 export default function QuienesSomosPage() {
