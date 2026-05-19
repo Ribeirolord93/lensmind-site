@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     'Términos y condiciones de uso del sitio Lensmind™ y de la compra de productos en México y Colombia.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/terminos' },
+  openGraph: {
+    title: 'Términos y Condiciones | Lensmind',
+    description: 'Términos y condiciones de uso del sitio Lensmind™ y de la compra de productos en México y Colombia.',
+    url: '/terminos',
+    type: 'website',
+  },
 };
 
 export default function TerminosPage() {

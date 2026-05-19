@@ -42,7 +42,6 @@ const cols = [
       { label: 'Lensmind™ Edition 01', href: '/#producto' },
       { label: 'Tecnología', href: '/#tecnologia' },
       { label: 'Comparativa', href: '/#comparativa' },
-      { label: 'Especificaciones', href: '/#specs' },
     ],
   },
   {

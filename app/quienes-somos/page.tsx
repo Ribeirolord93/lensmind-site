@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description:
     'Lensmind™ — tecnología visual con IA pensada y soportada para Latinoamérica.',
   alternates: { canonical: '/quienes-somos' },
+  openGraph: {
+    title: 'Quiénes somos | Lensmind',
+    description: 'Lensmind™ — tecnología visual con IA pensada y soportada para Latinoamérica.',
+    url: '/quienes-somos',
+    type: 'website',
+  },
 };
 
 export default function QuienesSomosPage() {

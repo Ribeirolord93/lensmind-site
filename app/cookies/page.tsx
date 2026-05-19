@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     'Información sobre el uso de cookies y tecnologías similares en Lensmind™.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/cookies' },
+  openGraph: {
+    title: 'Política de Cookies | Lensmind',
+    description: 'Información sobre el uso de cookies y tecnologías similares en Lensmind™.',
+    url: '/cookies',
+    type: 'website',
+  },
 };
 
 export default function CookiesPage() {

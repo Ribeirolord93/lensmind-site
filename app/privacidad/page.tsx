@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     'Política de privacidad y tratamiento de datos personales de Lensmind™. Cumple con LFPDPPP México y Ley 1581 de Habeas Data Colombia.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/privacidad' },
+  openGraph: {
+    title: 'Política de Privacidad | Lensmind',
+    description: 'Política de privacidad y tratamiento de datos personales de Lensmind™. Cumple con LFPDPPP México y Ley 1581 de Habeas Data Colombia.',
+    url: '/privacidad',
+    type: 'website',
+  },
 };
 
 export default function PrivacidadPage() {

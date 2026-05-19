@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   description:
     'Lensmind™ pone la privacidad primero. LED visible, sin entrenamiento de IA con tus datos, sin cargas automáticas. Cumplimos con LFPDPPP México y Ley 1581 de Habeas Data Colombia.',
   alternates: { canonical: '/privacidad-datos' },
+  openGraph: {
+    title: 'Privacidad y Datos — Tus videos, tu control | Lensmind',
+    description: 'Lensmind™ pone la privacidad primero. LED visible, sin entrenamiento de IA con tus datos, sin cargas automáticas. Cumplimos con LFPDPPP México y Ley 1581 de Habeas Data Colombia.',
+    url: '/privacidad-datos',
+    type: 'website',
+  },
 };
 
 const principles = [

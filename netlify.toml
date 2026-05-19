@@ -8,6 +8,14 @@
   # Reduz peso do bundle build
   NEXT_TELEMETRY_DISABLED = "1"
 
+
+# === 301 REDIRECT www -> apex (canonical SEO) ===
+[[redirects]]
+  from = "https://www.lensmind.lat/*"
+  to = "https://lensmind.lat/:splat"
+  status = 301
+  force = true
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 

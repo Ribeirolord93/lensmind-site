@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   description:
     'Política completa de reembolsos, devoluciones y garantía de Lensmind™.',
   alternates: { canonical: '/reembolsos' },
+  openGraph: {
+    title: 'Política de Reembolsos y Devoluciones | Lensmind',
+    description: 'Política completa de reembolsos, devoluciones y garantía de Lensmind™.',
+    url: '/reembolsos',
+    type: 'website',
+  },
 };
 
 export default function ReembolsosPage() {

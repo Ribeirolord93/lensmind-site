@@ -255,7 +255,7 @@ export default function ComparisonTable() {
               Ahorro
             </div>
             <div className="w-28 md:w-36 text-center text-ember font-semibold text-base">
-              −$229.01 USD
+              −$230 USD
             </div>
             <div className="w-28 md:w-36" />
           </motion.div>
